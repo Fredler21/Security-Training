@@ -2,58 +2,55 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Shield, Menu, X } from "lucide-react";
-import { cn } from "@/lib/cn";
+import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Why It Matters", href: "/#why" },
-  { label: "Training Modules", href: "/#modules" },
-  { label: "How It Works", href: "/#how" },
+  { label: "Platform", href: "/" },
+  { label: "Solutions", href: "/" },
+  { label: "Resources", href: "/" },
+  { label: "Pricing", href: "/" },
 ];
 
 export default function PublicNavbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur-md">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-teal-600 shadow-sm group-hover:bg-teal-700 transition-colors">
-              <Shield className="h-4.5 w-4.5 text-white" strokeWidth={2.5} />
-            </div>
-            <span className="text-[15px] font-semibold text-slate-900 tracking-tight">
-              EdLight<span className="text-teal-600"> Security</span>
-            </span>
-          </Link>
+    <header className="bg-[#faf6f0]/90 backdrop-blur-md border-b border-stone-200/50 shadow-sm fixed top-0 w-full z-50">
+      <div className="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+        {/* Logo */}
+        <Link href="/" className="text-2xl font-bold text-[#4a7c59]" style={{ fontFamily: 'var(--font-literata), Literata, serif' }}>
+          EdLight
+        </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
-          {/* CTA */}
-          <div className="hidden md:flex items-center gap-3">
+        {/* Desktop nav */}
+        <nav className="hidden md:flex items-center space-x-8">
+          {navLinks.map((link) => (
             <Link
-              href="/login"
-              className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-700 transition-colors"
+              key={link.label}
+              href={link.href}
+              className="text-stone-600 hover:text-[#4a7c59] transition-colors text-sm font-medium"
             >
-              Sign In
+              {link.label}
             </Link>
-          </div>
+          ))}
+        </nav>
 
-          {/* Mobile menu toggle */}
+        {/* CTAs */}
+        <div className="flex items-center space-x-4">
+          <Link
+            href="/login"
+            className="hidden md:block text-stone-600 font-medium px-4 py-2 hover:bg-stone-100 rounded-lg transition-all text-sm"
+          >
+            Sign In
+          </Link>
+          <Link
+            href="/login"
+            className="bg-[#4a7c59] text-white px-6 py-2.5 rounded-lg font-bold shadow-sm hover:opacity-90 transition-all text-sm"
+          >
+            Get a Demo
+          </Link>
           <button
-            className="md:hidden p-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+            className="md:hidden p-2 rounded-md text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition-colors"
             onClick={() => setOpen(!open)}
             aria-label="Toggle navigation"
           >
@@ -63,32 +60,27 @@ export default function PublicNavbar() {
       </div>
 
       {/* Mobile menu */}
-      <div
-        className={cn(
-          "md:hidden border-t border-slate-200 bg-white transition-all duration-200 overflow-hidden",
-          open ? "max-h-64" : "max-h-0"
-        )}
-      >
-        <div className="px-6 py-4 space-y-3">
+      {open && (
+        <div className="md:hidden px-6 pb-4 bg-[#faf6f0] border-t border-stone-200/50">
           {navLinks.map((link) => (
             <Link
-              key={link.href}
+              key={link.label}
               href={link.href}
+              className="block py-2.5 text-stone-600 hover:text-[#4a7c59] transition-colors text-sm font-medium"
               onClick={() => setOpen(false)}
-              className="block text-sm font-medium text-slate-700 hover:text-teal-600 transition-colors"
             >
               {link.label}
             </Link>
           ))}
           <Link
             href="/login"
+            className="block mt-2 py-2.5 text-[#4a7c59] text-sm font-bold"
             onClick={() => setOpen(false)}
-            className="block mt-2 rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white text-center hover:bg-teal-700 transition-colors"
           >
             Sign In
           </Link>
         </div>
-      </div>
+      )}
     </header>
   );
 }
