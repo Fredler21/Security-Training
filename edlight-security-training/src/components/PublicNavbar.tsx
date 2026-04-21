@@ -5,10 +5,9 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Platform", href: "/" },
-  { label: "Solutions", href: "/" },
-  { label: "Resources", href: "/" },
-  { label: "Pricing", href: "/" },
+  { label: "Why It Matters", href: "#" },
+  { label: "Training Modules", href: "#modules" },
+  { label: "Platform Features", href: "#" },
 ];
 
 export default function PublicNavbar() {

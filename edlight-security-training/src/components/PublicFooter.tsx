@@ -20,10 +20,10 @@ export default function PublicFooter() {
         {/* Links */}
         <div className="flex flex-wrap justify-center gap-8 mb-8 md:mb-0">
           {[
-            { label: "Privacy Policy", href: "#" },
-            { label: "Terms of Service", href: "#" },
-            { label: "Security", href: "#" },
-            { label: "Contact Us", href: "mailto:security@edlight.org" },
+            { label: "Training Modules", href: "#modules" },
+            { label: "Why It Matters", href: "#" },
+            { label: "IT Helpdesk", href: "mailto:it@edlight.org" },
+            { label: "Report a Threat", href: "mailto:security@edlight.org" },
           ].map((item) => (
             <Link
               key={item.label}
