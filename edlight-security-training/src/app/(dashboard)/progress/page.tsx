@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   CheckCircle2,
@@ -11,58 +13,36 @@ import {
 import ProgressBar from "@/components/ProgressBar";
 import StatusBadge from "@/components/StatusBadge";
 import { modules } from "@/data/modules";
-import { ModuleStatus } from "@/types";
+import { useAuth } from "@/context/AuthContext";
+import { useProgress } from "@/hooks/useProgress";
 
-// Demo data — replaced by Firebase in V2
-const demoProgress: Record<
-  string,
-  { status: ModuleStatus; score: number | null; completedAt: string | null; progress: number }
-> = {
-  "module-1": {
-    status: "completed",
-    score: 100,
-    completedAt: "2026-04-14",
-    progress: 100,
-  },
-  "module-2": {
-    status: "completed",
-    score: 75,
-    completedAt: "2026-04-16",
-    progress: 100,
-  },
-  "module-3": {
-    status: "in_progress",
-    score: null,
-    completedAt: null,
-    progress: 45,
-  },
-  "module-4": { status: "not_started", score: null, completedAt: null, progress: 0 },
-  "module-5": { status: "not_started", score: null, completedAt: null, progress: 0 },
-};
+export default function ProgressPage() {
+  const { user } = useAuth();
+  const { getModuleProgress, loading } = useProgress(user?.uid);
 
-const completedModules = modules.filter(
-  (m) => demoProgress[m.id]?.status === "completed"
-);
-const inProgressModules = modules.filter(
-  (m) => demoProgress[m.id]?.status === "in_progress"
-);
-const remainingModules = modules.filter(
-  (m) => demoProgress[m.id]?.status === "not_started"
-);
+  const completedModules = modules.filter(
+    (m) => getModuleProgress(m.id).status === "completed"
+  );
+  const inProgressModules = modules.filter(
+    (m) => getModuleProgress(m.id).status === "in_progress"
+  );
+  const remainingModules = modules.filter(
+    (m) => getModuleProgress(m.id).status === "not_started"
+  );
 
-const overallPercent = Math.round((completedModules.length / modules.length) * 100);
-const avgScore =
-  completedModules.length > 0
-    ? Math.round(
-        completedModules.reduce(
-          (sum, m) => sum + (demoProgress[m.id]?.score ?? 0),
-          0
-        ) / completedModules.length
-      )
-    : null;
+  const overallPercent = Math.round((completedModules.length / modules.length) * 100);
+  const avgScore =
+    completedModules.length > 0
+      ? Math.round(
+          completedModules.reduce(
+            (sum, m) => sum + (getModuleProgress(m.id).score ?? 0),
+            0
+          ) / completedModules.length
+        )
+      : null;
 
-const totalMinutes = modules.reduce((sum, m) => sum + m.estimatedMinutes, 0);
-const minutesDone = completedModules.reduce((sum, m) => sum + m.estimatedMinutes, 0);
+  const totalMinutes = modules.reduce((sum, m) => sum + m.estimatedMinutes, 0);
+  const minutesDone = completedModules.reduce((sum, m) => sum + m.estimatedMinutes, 0);
 
 export default function ProgressPage() {
   return (
@@ -82,28 +62,28 @@ export default function ProgressPage() {
           {
             icon: TrendingUp,
             label: "Overall Progress",
-            value: `${overallPercent}%`,
+            value: loading ? "—" : `${overallPercent}%`,
             color: "text-teal-600",
             bg: "bg-teal-50",
           },
           {
             icon: CheckCircle2,
             label: "Modules Done",
-            value: `${completedModules.length} / ${modules.length}`,
+            value: loading ? "—" : `${completedModules.length} / ${modules.length}`,
             color: "text-green-600",
             bg: "bg-green-50",
           },
           {
             icon: BarChart2,
             label: "Avg. Quiz Score",
-            value: avgScore !== null ? `${avgScore}%` : "—",
+            value: loading ? "—" : avgScore !== null ? `${avgScore}%` : "—",
             color: "text-blue-600",
             bg: "bg-blue-50",
           },
           {
             icon: Clock,
             label: "Time Completed",
-            value: `${minutesDone} min`,
+            value: loading ? "—" : `${minutesDone} min`,
             color: "text-slate-600",
             bg: "bg-slate-50",
           },
@@ -145,7 +125,7 @@ export default function ProgressPage() {
         </div>
         <div className="divide-y divide-slate-100">
           {modules.map((mod) => {
-            const prog = demoProgress[mod.id];
+            const prog = getModuleProgress(mod.id);
             return (
               <div key={mod.id} className="px-6 py-4 flex items-center gap-4">
                 {/* Status icon */}
@@ -176,7 +156,7 @@ export default function ProgressPage() {
                   )}
                   {prog.status === "completed" && prog.completedAt && (
                     <p className="text-xs text-slate-400">
-                      Completed {prog.completedAt}
+                      Completed {new Date(prog.completedAt).toLocaleDateString()}
                     </p>
                   )}
                   {prog.status === "not_started" && (
@@ -184,7 +164,7 @@ export default function ProgressPage() {
                   )}
                 </div>
 
-                {/* Score */}
+                {/* Score / Action */}
                 <div className="flex-shrink-0 flex items-center gap-4">
                   {prog.score !== null ? (
                     <div className="text-right">
@@ -214,7 +194,7 @@ export default function ProgressPage() {
       </div>
 
       {/* Completeness message */}
-      {completedModules.length === modules.length ? (
+      {!loading && completedModules.length === modules.length ? (
         <div className="bg-teal-50 border border-teal-200 rounded-2xl p-6 text-center">
           <CheckCircle2 className="h-10 w-10 text-teal-600 mx-auto mb-3" />
           <h3 className="text-lg font-bold text-teal-900 mb-1">
@@ -232,12 +212,20 @@ export default function ProgressPage() {
               {remainingModules.length + inProgressModules.length !== 1 ? "s" : ""} left to complete
             </p>
             <p className="text-sm text-slate-500">
-              Keep going — you're {overallPercent}% through the program.
+              Keep going — you&apos;re {overallPercent}% through the program.
             </p>
           </div>
           <Link
             href="/modules"
             className="flex items-center gap-2 rounded-xl bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-teal-700 transition-colors"
+          >
+            Continue Training <ChevronRight className="h-4 w-4" />
+          </Link>
+        </div>
+      )}
+    </div>
+  );
+}
           >
             Continue Training <ChevronRight className="h-4 w-4" />
           </Link>

@@ -11,10 +11,14 @@ import {
   BookOpen,
   HelpCircle,
   ChevronRight,
+  Loader2,
 } from "lucide-react";
 import { TrainingModule } from "@/types";
 import QuizSection from "@/components/QuizSection";
 import { cn } from "@/lib/cn";
+import { useAuth } from "@/context/AuthContext";
+import { saveModuleCompletion } from "@/lib/firestore";
+import { modules } from "@/data/modules";
 
 type Tab = "lecture" | "quiz";
 
@@ -73,17 +77,26 @@ function renderLecture(content: string) {
 }
 
 export default function ModuleView({ module }: ModuleViewProps) {
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<Tab>("lecture");
   const [lectureRead, setLectureRead] = useState(false);
   const [quizScore, setQuizScore] = useState<number | null>(null);
   const [completed, setCompleted] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   function handleQuizComplete(score: number) {
     setQuizScore(score);
   }
 
-  function handleMarkComplete() {
-    setCompleted(true);
+  async function handleMarkComplete() {
+    if (!user || quizScore === null) return;
+    setSaving(true);
+    try {
+      await saveModuleCompletion(user.uid, module.id, quizScore, modules.length);
+      setCompleted(true);
+    } finally {
+      setSaving(false);
+    }
   }
 
   const colorMap: Record<string, string> = {
@@ -286,10 +299,15 @@ export default function ModuleView({ module }: ModuleViewProps) {
             <div className="mt-6 flex justify-end">
               <button
                 onClick={handleMarkComplete}
-                className="flex items-center gap-2 rounded-xl bg-teal-600 px-6 py-3 text-sm font-semibold text-white hover:bg-teal-700 transition-colors shadow-sm"
+                disabled={saving}
+                className="flex items-center gap-2 rounded-xl bg-teal-600 px-6 py-3 text-sm font-semibold text-white hover:bg-teal-700 transition-colors shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                <CheckCircle2 className="h-4 w-4" />
-                Mark Module as Complete
+                {saving ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <CheckCircle2 className="h-4 w-4" />
+                )}
+                {saving ? "Saving…" : "Mark Module as Complete"}
               </button>
             </div>
           )}
