@@ -10,25 +10,30 @@ import {
   Settings,
   ChevronRight,
   LogOut,
+  ShieldCheck,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { cn } from "@/lib/cn";
-import { useAuth } from "@/context/AuthContext";
-import { signOut } from "@/lib/auth";
+import { useAuth } from "@/context/AuthContext";import { signOut } from "@/lib/auth";
 import { db } from "@/lib/firebase";
 
-const navItems = [
+const employeeNavItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "Modules", href: "/modules", icon: BookOpen },
   { label: "My Progress", href: "/progress", icon: BarChart2 },
   { label: "Settings", href: "/settings", icon: Settings },
 ];
 
+const adminNavItems = [
+  { label: "Admin Dashboard", href: "/admin/dashboard", icon: ShieldCheck },
+  { label: "Employees", href: "/admin/employees", icon: LayoutDashboard },
+];
+
 export default function DashboardSidebar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, role } = useAuth();
   const [profile, setProfile] = useState<{ jobTitle: string; department: string } | null>(null);
 
   useEffect(() => {
@@ -72,7 +77,7 @@ export default function DashboardSidebar() {
 
       {/* Navigation */}
       <nav className="flex-1 px-3 py-5 space-y-1">
-        {navItems.map(({ label, href, icon: Icon }) => {
+        {employeeNavItems.map(({ label, href, icon: Icon }) => {
           const active = pathname === href || pathname.startsWith(href + "/");
           return (
             <Link
@@ -98,6 +103,43 @@ export default function DashboardSidebar() {
             </Link>
           );
         })}
+
+        {/* Admin section */}
+        {(role === "admin" || role === "super_admin") && (
+          <>
+            <div className="pt-4 pb-1 px-3">
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-600">
+                Admin
+              </p>
+            </div>
+            {adminNavItems.map(({ label, href, icon: Icon }) => {
+              const active = pathname === href || pathname.startsWith(href + "/");
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={cn(
+                    "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all group",
+                    active
+                      ? "bg-teal-600/15 text-teal-400"
+                      : "text-slate-400 hover:text-white hover:bg-slate-800"
+                  )}
+                >
+                  <Icon
+                    className={cn(
+                      "h-4.5 w-4.5 flex-shrink-0",
+                      active ? "text-teal-400" : "text-slate-500 group-hover:text-slate-300"
+                    )}
+                  />
+                  <span>{label}</span>
+                  {active && (
+                    <ChevronRight className="ml-auto h-3.5 w-3.5 text-teal-500" />
+                  )}
+                </Link>
+              );
+            })}
+          </>
+        )}
       </nav>
 
       {/* User area */}

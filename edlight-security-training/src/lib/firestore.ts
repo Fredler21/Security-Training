@@ -6,6 +6,7 @@ import {
   collection,
   query,
   where,
+  orderBy,
   serverTimestamp,
 } from "firebase/firestore";
 import { db } from "./firebase";
@@ -91,4 +92,79 @@ async function recalculateUserProgress(
     },
     { merge: true }
   );
+}
+
+// ─── Admin Queries ────────────────────────────────────────────────────────────
+
+export interface AdminUser {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  department: string;
+  jobTitle: string;
+  profileImage: string;
+  status: string;
+  lastLoginAt: string | null;
+  createdAt: string | null;
+}
+
+export async function getAllUsers(): Promise<AdminUser[]> {
+  const snap = await getDocs(
+    query(collection(db, "users"), orderBy("name"))
+  );
+  return snap.docs.map((d) => {
+    const data = d.data();
+    return {
+      id: d.id,
+      name: data.name ?? "",
+      email: data.email ?? "",
+      role: data.role ?? "employee",
+      department: data.department ?? "",
+      jobTitle: data.jobTitle ?? "",
+      profileImage: data.profileImage ?? "",
+      status: data.status ?? "active",
+      lastLoginAt: data.lastLoginAt?.toDate?.()?.toISOString() ?? null,
+      createdAt: data.createdAt?.toDate?.()?.toISOString() ?? null,
+    };
+  });
+}
+
+export async function getUserById(userId: string): Promise<AdminUser | null> {
+  const snap = await getDoc(doc(db, "users", userId));
+  if (!snap.exists()) return null;
+  const data = snap.data();
+  return {
+    id: snap.id,
+    name: data.name ?? "",
+    email: data.email ?? "",
+    role: data.role ?? "employee",
+    department: data.department ?? "",
+    jobTitle: data.jobTitle ?? "",
+    profileImage: data.profileImage ?? "",
+    status: data.status ?? "active",
+    lastLoginAt: data.lastLoginAt?.toDate?.()?.toISOString() ?? null,
+    createdAt: data.createdAt?.toDate?.()?.toISOString() ?? null,
+  };
+}
+
+export async function getCompletionsForUser(
+  userId: string
+): Promise<Record<string, import("@/types").ModuleCompletion>> {
+  const q = query(
+    collection(db, "moduleCompletions"),
+    where("userId", "==", userId)
+  );
+  const snap = await getDocs(q);
+  const result: Record<string, import("@/types").ModuleCompletion> = {};
+  snap.forEach((d) => {
+    const data = d.data() as import("@/types").ModuleCompletion;
+    result[data.moduleId] = data;
+  });
+  return result;
+}
+
+export async function getAllProgressRecords(): Promise<import("@/types").EmployeeTrainingProgress[]> {
+  const snap = await getDocs(collection(db, "userProgress"));
+  return snap.docs.map((d) => d.data() as import("@/types").EmployeeTrainingProgress);
 }
