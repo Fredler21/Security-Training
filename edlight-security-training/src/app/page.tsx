@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import PublicNavbar from "@/components/PublicNavbar";
 import PublicFooter from "@/components/PublicFooter";
+import { useTheme } from "@/context/ThemeContext";
 
 const features = [
   {
@@ -75,8 +78,11 @@ const steps = [
 ];
 
 export default function HomePage() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#faf6f0", color: "#2e3230" }}>
+    <div className="min-h-screen" style={{ backgroundColor: isDark ? "#141a16" : "#faf6f0", color: isDark ? "#f0ece4" : "#2e3230" }}>
       <PublicNavbar />
 
       <main className="overflow-x-hidden">
@@ -391,7 +397,7 @@ export default function HomePage() {
         {/* ══════════════════════════════════════════════════
             THREAT STATS — dark band
         ══════════════════════════════════════════════════ */}
-        <section className="relative py-24 overflow-hidden" style={{ backgroundColor: "#1a1f1c" }}>
+        <section id="why-it-matters" className="relative py-24 overflow-hidden" style={{ backgroundColor: "#1a1f1c" }}>
           <div
             className="pointer-events-none absolute inset-0"
             style={{
@@ -483,7 +489,7 @@ export default function HomePage() {
         {/* ══════════════════════════════════════════════════
             HOW IT WORKS — light section with steps
         ══════════════════════════════════════════════════ */}
-        <section className="py-28 px-6" style={{ backgroundColor: "#faf6f0" }}>
+        <section id="how-it-works" className="py-28 px-6" style={{ backgroundColor: isDark ? "#1a1f1c" : "#faf6f0" }}>
           <div className="max-w-7xl mx-auto">
             <div className="grid md:grid-cols-2 gap-16 items-center">
               {/* Left text */}
@@ -498,14 +504,14 @@ export default function HomePage() {
                   className="text-4xl md:text-5xl font-bold leading-tight mb-6"
                   style={{
                     fontFamily: "var(--font-literata), Literata, serif",
-                    color: "#2e3230",
+                    color: isDark ? "#f0ece4" : "#2e3230",
                   }}
                 >
                   From sign-in to
                   <br />
                   certified in one hour.
                 </h2>
-                <p className="text-lg leading-relaxed mb-10" style={{ color: "#6b6358" }}>
+                <p className="text-lg leading-relaxed mb-10" style={{ color: isDark ? "rgba(240,236,228,0.6)" : "#6b6358" }}>
                   No installations. No lengthy onboarding. Just open your browser, sign in with
                   Google, and work through five focused modules at your own pace.
                 </p>
@@ -548,17 +554,17 @@ export default function HomePage() {
                     <div className="pb-8">
                       <p
                         className="text-xs font-bold uppercase tracking-widest mb-1"
-                        style={{ color: "#74796e" }}
+                        style={{ color: isDark ? "rgba(240,236,228,0.4)" : "#74796e" }}
                       >
                         Step {s.step}
                       </p>
                       <h3
                         className="text-base font-bold mb-1"
-                        style={{ color: "#2e3230" }}
+                        style={{ color: isDark ? "#f0ece4" : "#2e3230" }}
                       >
                         {s.title}
                       </h3>
-                      <p className="text-sm leading-relaxed" style={{ color: "#6b6358" }}>
+                      <p className="text-sm leading-relaxed" style={{ color: isDark ? "rgba(240,236,228,0.55)" : "#6b6358" }}>
                         {s.description}
                       </p>
                     </div>
@@ -574,9 +580,9 @@ export default function HomePage() {
         ══════════════════════════════════════════════════ */}
         <section
           style={{
-            backgroundColor: "#f0ece4",
-            borderTop: "1px solid rgba(196,200,188,0.5)",
-            borderBottom: "1px solid rgba(196,200,188,0.5)",
+            backgroundColor: isDark ? "#111510" : "#f0ece4",
+            borderTop: isDark ? "1px solid rgba(74,124,89,0.15)" : "1px solid rgba(196,200,188,0.5)",
+            borderBottom: isDark ? "1px solid rgba(74,124,89,0.15)" : "1px solid rgba(196,200,188,0.5)",
           }}
         >
           <div className="max-w-7xl mx-auto px-6 py-12">
@@ -603,12 +609,12 @@ export default function HomePage() {
                     className="text-2xl font-extrabold"
                     style={{
                       fontFamily: "var(--font-literata), Literata, serif",
-                      color: "#2e3230",
+                      color: isDark ? "#f0ece4" : "#2e3230",
                     }}
                   >
                     {value}
                   </p>
-                  <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: "#74796e" }}>
+                  <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: isDark ? "rgba(240,236,228,0.4)" : "#74796e" }}>
                     {label}
                   </p>
                 </div>
@@ -620,7 +626,7 @@ export default function HomePage() {
         {/* ══════════════════════════════════════════════════
             FEATURES — numbered cards
         ══════════════════════════════════════════════════ */}
-        <section className="py-28 px-6" style={{ backgroundColor: "#faf6f0" }}>
+        <section id="platform-features" className="py-28 px-6" style={{ backgroundColor: isDark ? "#141a16" : "#faf6f0" }}>
           <div className="max-w-7xl mx-auto">
             <div className="text-center max-w-2xl mx-auto mb-16">
               <p
@@ -633,12 +639,12 @@ export default function HomePage() {
                 className="text-4xl md:text-5xl font-bold mb-5"
                 style={{
                   fontFamily: "var(--font-literata), Literata, serif",
-                  color: "#2e3230",
+                  color: isDark ? "#f0ece4" : "#2e3230",
                 }}
               >
                 Everything you need to train effectively
               </h2>
-              <p className="text-lg leading-relaxed" style={{ color: "#6b6358" }}>
+              <p className="text-lg leading-relaxed" style={{ color: isDark ? "rgba(240,236,228,0.55)" : "#6b6358" }}>
                 Built for EdLight employees — simple enough for anyone to use, powerful enough
                 to build a lasting security culture.
               </p>
@@ -650,8 +656,8 @@ export default function HomePage() {
                   key={f.title}
                   className="group relative p-8 rounded-2xl flex flex-col items-start transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
                   style={{
-                    backgroundColor: "#ffffff",
-                    border: "1px solid rgba(196,200,188,0.4)",
+                    backgroundColor: isDark ? "#1e2820" : "#ffffff",
+                    border: isDark ? "1px solid rgba(74,124,89,0.2)" : "1px solid rgba(196,200,188,0.4)",
                   }}
                 >
                   {/* Subtle hover border accent */}
@@ -682,7 +688,7 @@ export default function HomePage() {
                       className="text-4xl font-extrabold leading-none tabular-nums"
                       style={{
                         fontFamily: "var(--font-literata), Literata, serif",
-                        color: "rgba(196,200,188,0.6)",
+                        color: isDark ? "rgba(74,124,89,0.3)" : "rgba(196,200,188,0.6)",
                       }}
                     >
                       {f.number}
@@ -693,12 +699,12 @@ export default function HomePage() {
                     className="text-lg font-bold mb-3"
                     style={{
                       fontFamily: "var(--font-literata), Literata, serif",
-                      color: "#2e3230",
+                      color: isDark ? "#f0ece4" : "#2e3230",
                     }}
                   >
                     {f.title}
                   </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: "#6b6358" }}>
+                  <p className="text-sm leading-relaxed" style={{ color: isDark ? "rgba(240,236,228,0.55)" : "#6b6358" }}>
                     {f.description}
                   </p>
                 </div>
@@ -710,7 +716,7 @@ export default function HomePage() {
         {/* ══════════════════════════════════════════════════
             CTA — dark premium block
         ══════════════════════════════════════════════════ */}
-        <section className="py-20 px-6" style={{ backgroundColor: "#f5f1ea" }}>
+        <section className="py-20 px-6" style={{ backgroundColor: isDark ? "#0a0e0b" : "#f5f1ea" }}>
           <div
             className="relative max-w-5xl mx-auto rounded-3xl overflow-hidden"
             style={{

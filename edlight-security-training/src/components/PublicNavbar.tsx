@@ -2,16 +2,19 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme } from "@/context/ThemeContext";
 
 const navLinks = [
-  { label: "Why It Matters", href: "#" },
-  { label: "How It Works", href: "#" },
-  { label: "Platform Features", href: "#" },
+  { label: "Why It Matters", href: "#why-it-matters" },
+  { label: "How It Works", href: "#how-it-works" },
+  { label: "Platform Features", href: "#platform-features" },
 ];
 
 export default function PublicNavbar() {
   const [open, setOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
 
   return (
     <header
@@ -82,6 +85,19 @@ export default function PublicNavbar() {
           >
             Get Started
           </Link>
+          {/* Dark / Light toggle */}
+          <button
+            onClick={toggleTheme}
+            className="hidden md:flex items-center justify-center h-9 w-9 rounded-lg transition-all"
+            style={{
+              backgroundColor: isDark ? "rgba(74,124,89,0.15)" : "rgba(255,255,255,0.08)",
+              border: isDark ? "1px solid rgba(74,124,89,0.3)" : "1px solid rgba(74,124,89,0.2)",
+              color: isDark ? "#6eba8a" : "rgba(240,236,228,0.6)",
+            }}
+            aria-label="Toggle dark/light mode"
+          >
+            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
           <button
             className="md:hidden p-2 rounded-lg transition-colors"
             style={{ color: "rgba(240,236,228,0.6)" }}
@@ -121,6 +137,14 @@ export default function PublicNavbar() {
           >
             Sign In →
           </Link>
+          <button
+            onClick={toggleTheme}
+            className="mt-4 flex items-center gap-2 text-sm font-medium"
+            style={{ color: "rgba(240,236,228,0.55)" }}
+          >
+            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            {isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          </button>
         </div>
       )}
     </header>
