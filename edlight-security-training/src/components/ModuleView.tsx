@@ -12,6 +12,7 @@ import {
   HelpCircle,
   ChevronRight,
   Loader2,
+  Lock,
 } from "lucide-react";
 import { TrainingModule } from "@/types";
 import QuizSection from "@/components/QuizSection";
@@ -19,6 +20,7 @@ import { cn } from "@/lib/cn";
 import { useAuth } from "@/context/AuthContext";
 import { saveModuleCompletion } from "@/lib/firestore";
 import { modules } from "@/data/modules";
+import { useProgress } from "@/hooks/useProgress";
 
 type Tab = "lecture" | "quiz";
 
@@ -78,11 +80,19 @@ function renderLecture(content: string) {
 
 export default function ModuleView({ module }: ModuleViewProps) {
   const { user } = useAuth();
+  const { getModuleProgress, loading: progressLoading } = useProgress(user?.uid);
   const [activeTab, setActiveTab] = useState<Tab>("lecture");
   const [lectureRead, setLectureRead] = useState(false);
   const [quizScore, setQuizScore] = useState<number | null>(null);
   const [completed, setCompleted] = useState(false);
   const [saving, setSaving] = useState(false);
+
+  // Find the previous module (by order)
+  const previousModule = modules.find((m) => m.order === module.order - 1);
+  const isLocked =
+    !progressLoading &&
+    previousModule !== undefined &&
+    getModuleProgress(previousModule.id).status !== "completed";
 
   function handleQuizComplete(score: number) {
     setQuizScore(score);
@@ -118,7 +128,32 @@ export default function ModuleView({ module }: ModuleViewProps) {
         <ChevronLeft className="h-4 w-4" /> Back to Modules
       </Link>
 
-      {/* Module Hero */}
+      {/* Locked state */}
+      {isLocked && (
+        <div className="flex flex-col items-center justify-center text-center py-20 bg-white border border-slate-200 rounded-2xl shadow-sm">
+          <div className="h-16 w-16 rounded-full bg-slate-100 flex items-center justify-center mb-5">
+            <Lock className="h-7 w-7 text-slate-400" />
+          </div>
+          <h2 className="text-xl font-bold text-slate-900 mb-2">Module Locked</h2>
+          <p className="text-sm text-slate-500 max-w-sm mb-6">
+            You must complete{" "}
+            <span className="font-semibold text-slate-700">
+              Module {previousModule!.order} — {previousModule!.title}
+            </span>{" "}
+            before accessing this module.
+          </p>
+          <Link
+            href={`/modules/${previousModule!.slug}`}
+            className="flex items-center gap-2 rounded-xl bg-teal-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-teal-700 transition-colors"
+          >
+            Go to Module {previousModule!.order} <ChevronRight className="h-4 w-4" />
+          </Link>
+        </div>
+      )}
+
+      {/* Module content — only shown when unlocked */}
+      {!isLocked && (
+      <>
       <div className={`bg-gradient-to-r ${gradientClass} rounded-2xl overflow-hidden mb-8 shadow-lg`}>
         {/* AI-generated module image */}
         <div className="relative w-full h-52 sm:h-64">
@@ -312,6 +347,8 @@ export default function ModuleView({ module }: ModuleViewProps) {
             </div>
           )}
         </div>
+      )}
+      </>
       )}
     </div>
   );
