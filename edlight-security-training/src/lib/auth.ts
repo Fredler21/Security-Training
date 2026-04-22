@@ -3,7 +3,7 @@ import {
   signInWithPopup,
   signOut as firebaseSignOut,
 } from "firebase/auth";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "./firebase";
 
 const ALLOWED_DOMAIN = "edlight.org";
@@ -53,7 +53,10 @@ export async function signInWithGoogle() {
     ? await fetchWorkspaceProfile(credential.accessToken)
     : { jobTitle: "", department: "", organization: "" };
 
-  // Upsert user profile in Firestore
+  // Upsert user profile in Firestore — preserve role if already set
+  const existingSnap = await getDoc(doc(db, "users", user.uid));
+  const existingRole = existingSnap.exists() ? existingSnap.data().role : "employee";
+
   await setDoc(
     doc(db, "users", user.uid),
     {
@@ -64,7 +67,7 @@ export async function signInWithGoogle() {
       jobTitle: workspaceProfile.jobTitle,
       department: workspaceProfile.department,
       organization: workspaceProfile.organization,
-      role: "employee",
+      role: existingRole ?? "employee",
       status: "active",
       lastLoginAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
