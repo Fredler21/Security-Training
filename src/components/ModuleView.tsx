@@ -415,8 +415,8 @@ export default function ModuleView({ module }: ModuleViewProps) {
           <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
             <QuizSection
               questions={module.questions}
-              onComplete={(score) => {
-                handleQuizComplete(score);
+              onComplete={(score, passed) => {
+                handleQuizComplete(score, passed);
               }}
             />
           </div>
