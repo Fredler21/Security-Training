@@ -16,7 +16,7 @@ export const modules: TrainingModule[] = [
     lectureContent: `
 ## Why Password Security Matters
 
-Passwords are the first line of defense for every account, system, and piece of data you have access to. A compromised password can give an attacker full access to your email, company files, financial accounts, and more — without any technical hacking required.
+Passwords are the first line of defense for every account, system, and piece of data you have access to. A compromised password can give an attacker full access to your email, company files, financial accounts, and more, without any technical hacking required.
 
 ### What Makes a Password Weak?
 
@@ -35,7 +35,7 @@ A strong password should be:
 - **At least 14 characters long**
 - A mix of uppercase and lowercase letters, numbers, and symbols
 - Completely random or a long passphrase (e.g., "BlueMountain!River42")
-- Unique — never used anywhere else
+- Unique, never used anywhere else
 
 ### Password Managers
 
@@ -48,13 +48,13 @@ You should never try to memorize every unique password. Use a trusted password m
 
 ### Multi-Factor Authentication (MFA)
 
-Even the strongest password can be stolen. That's why MFA adds a second verification step — like a code sent to your phone — so that even if someone has your password, they still can't get in.
+Even the strongest password can be stolen. That's why MFA adds a second verification step, like a code sent to your phone, so that even if someone has your password, they still can't get in.
 
 **MFA is required for all EdLight systems.** Enable it immediately on any account that offers it.
 
 ### Password Sharing Policy
 
-- Never share your password with anyone — including IT staff
+- Never share your password with anyone, including IT staff
 - EdLight IT will never ask for your password
 - If you need to give someone access, use permission settings in the relevant system
     `,
@@ -68,7 +68,7 @@ Even the strongest password can be stolen. That's why MFA adds a second verifica
     realLifeExample: {
       title: "The Reused Password Breach",
       scenario:
-        "An employee at a tech company used the same password for their work email, a shopping website, and a gaming account. When the gaming site was breached, attackers used that password to access the employee's work email — and then used that email to reset passwords for company financial tools.",
+        "An employee at a tech company used the same password for their work email, a shopping website, and a gaming account. When the gaming site was breached, attackers used that password to access the employee's work email, and then used that email to reset passwords for company financial tools.",
       lesson:
         "One reused password exposed the entire company. If each account had a unique password, the breach would have been contained to one low-risk site.",
     },
@@ -100,11 +100,11 @@ Even the strongest password can be stolen. That's why MFA adds a second verifica
         type: "multiple_choice",
         options: [
           "Share it if they have a ticket number",
-          "Refuse — IT will never ask for your password",
+          "Refuse, IT will never ask for your password",
           "Share it only over a secure call",
           "Reset it first, then share the new one",
         ],
-        correctAnswer: "Refuse — IT will never ask for your password",
+        correctAnswer: "Refuse, IT will never ask for your password",
         explanation:
           "Legitimate IT staff will never ask for your password. This is a classic social engineering tactic.",
       },
@@ -148,7 +148,7 @@ Phishing is one of the most common and dangerous cyber threats today. It happens
 ### Types of Phishing
 
 **Email Phishing**
-The attacker sends a fake email that looks like it's from a legitimate source — your bank, Google, a coworker, or even your CEO. The email urges you to act quickly.
+The attacker sends a fake email that looks like it's from a legitimate source, your bank, Google, a coworker, or even your CEO. The email urges you to act quickly.
 
 **Spear Phishing**
 A targeted attack where the attacker researches you specifically. They might mention your name, your team, or a recent project to appear more convincing.
@@ -184,21 +184,21 @@ If you accidentally clicked a suspicious link or entered credentials:
 1. Disconnect from the network immediately if possible
 2. Report it to IT at security@edlight.org
 3. Change the password for any account you entered credentials into
-4. Do not try to "fix it yourself" — report it right away
+4. Do not try to "fix it yourself", report it right away
     `,
     keyTakeaways: [
       "Phishing attacks impersonate trusted sources to steal information.",
       "Look for urgency, mismatched sender domains, and suspicious links.",
       "Hover over links before clicking to preview the real URL.",
       "Report all suspicious emails to security@edlight.org.",
-      "If you clicked something suspicious, report it to IT immediately — do not wait.",
+      "If you clicked something suspicious, report it to IT immediately, do not wait.",
     ],
     realLifeExample: {
       title: "The CEO Email Scam",
       scenario:
         "An employee received an urgent email appearing to come from the company CEO asking them to wire $15,000 to a vendor immediately and keep it confidential. The email domain was slightly misspelled: 'ceo@edl1ght.org'. The employee transferred the funds before verifying.",
       lesson:
-        "Always verify unusual requests — especially involving money or sensitive data — through a separate channel. A quick phone call to the actual CEO would have prevented the loss.",
+        "Always verify unusual requests, especially involving money or sensitive data, through a separate channel. A quick phone call to the actual CEO would have prevented the loss.",
     },
     questions: [
       {
@@ -225,11 +225,11 @@ If you accidentally clicked a suspicious link or entered credentials:
         options: [
           "Click the link immediately to avoid being locked out",
           "Reply to the email asking for more information",
-          "Do not click — go directly to the website by typing the URL, or contact IT",
+          "Do not click, go directly to the website by typing the URL, or contact IT",
           "Forward the email to your team",
         ],
         correctAnswer:
-          "Do not click — go directly to the website by typing the URL, or contact IT",
+          "Do not click, go directly to the website by typing the URL, or contact IT",
         explanation:
           "Urgency is a classic phishing tactic. Always verify by going directly to the site or contacting IT rather than clicking email links.",
       },
@@ -285,15 +285,15 @@ Every website you visit on a company device can be a potential entry point for r
 Always look for **HTTPS** (the padlock icon) in the address bar before entering any information on a website.
 
 - HTTPS encrypts communication between you and the site
-- HTTP is unencrypted — anyone on the same network can intercept your data
-- A padlock does NOT guarantee a site is trustworthy — it only means the connection is encrypted
+- HTTP is unencrypted, anyone on the same network can intercept your data
+- A padlock does NOT guarantee a site is trustworthy, it only means the connection is encrypted
 
 ### Dangerous Website Indicators
 
 Treat a website with caution if:
 
 - The URL looks unusual (extra characters, misspellings, or added words)
-- Your browser shows a security warning — do not ignore it
+- Your browser shows a security warning, do not ignore it
 - It asks you to download software or browser extensions unexpectedly
 - It requests sensitive information that seems unnecessary
 - Pop-ups appear aggressively or try to prevent you from leaving
@@ -317,7 +317,7 @@ Public Wi-Fi networks (hotels, coffee shops, airports) are unencrypted and easil
 
 ### Browser Extensions
 
-Browser extensions can be powerful — but they can also be malicious.
+Browser extensions can be powerful, but they can also be malicious.
 
 - Only install browser extensions that are approved by IT
 - Remove any extensions you no longer use
@@ -325,7 +325,7 @@ Browser extensions can be powerful — but they can also be malicious.
     `,
     keyTakeaways: [
       "Always look for HTTPS before entering any data on a website.",
-      "Do not ignore browser security warnings — they exist for a reason.",
+      "Do not ignore browser security warnings, they exist for a reason.",
       "Never download files from unknown or unexpected sources.",
       "Use the EdLight VPN whenever you're on public Wi-Fi.",
       "Only install IT-approved browser extensions.",
@@ -333,9 +333,9 @@ Browser extensions can be powerful — but they can also be malicious.
     realLifeExample: {
       title: "The Fake Software Update",
       scenario:
-        "While browsing a news site, an employee saw a pop-up saying 'Your browser is out of date — click here to update.' They clicked and downloaded what appeared to be a browser update. It was actually malware that silently logged keystrokes, including their work credentials, for weeks.",
+        "While browsing a news site, an employee saw a pop-up saying 'Your browser is out of date, click here to update.' They clicked and downloaded what appeared to be a browser update. It was actually malware that silently logged keystrokes, including their work credentials, for weeks.",
       lesson:
-        "Legitimate browser updates come from the browser or your IT department — not from websites. Never download software from a pop-up prompt.",
+        "Legitimate browser updates come from the browser or your IT department, not from websites. Never download software from a pop-up prompt.",
     },
     questions: [
       {
@@ -354,14 +354,14 @@ Browser extensions can be powerful — but they can also be malicious.
         question: "You're working from a hotel and need to access a company tool. What should you do?",
         type: "multiple_choice",
         options: [
-          "Use the hotel Wi-Fi — it's password protected so it's safe",
+          "Use the hotel Wi-Fi, it's password protected so it's safe",
           "Connect to EdLight VPN before accessing any company systems",
           "Use Incognito mode for extra protection",
           "Wait until you're back in the office",
         ],
         correctAnswer: "Connect to EdLight VPN before accessing any company systems",
         explanation:
-          "Public Wi-Fi — even password-protected hotel Wi-Fi — is not secure. Always use the VPN to encrypt your traffic.",
+          "Public Wi-Fi, even password-protected hotel Wi-Fi, is not secure. Always use the VPN to encrypt your traffic.",
       },
       {
         id: "q3-3",
@@ -369,14 +369,14 @@ Browser extensions can be powerful — but they can also be malicious.
         question: "A website you're visiting shows a browser security warning. What should you do?",
         type: "multiple_choice",
         options: [
-          "Click 'Proceed anyway' — it's probably a false alarm",
+          "Click 'Proceed anyway', it's probably a false alarm",
           "Close the page and do not continue",
           "Refresh the page once",
           "Disable the warning in browser settings",
         ],
         correctAnswer: "Close the page and do not continue",
         explanation:
-          "Browser security warnings indicate a real risk — the site may have an invalid certificate or be known for malicious activity. Do not proceed.",
+          "Browser security warnings indicate a real risk, the site may have an invalid certificate or be known for malicious activity. Do not proceed.",
       },
       {
         id: "q3-4",
@@ -417,7 +417,7 @@ Access control is one of the most important pillars of company security. Knowing
 
 ### The Principle of Least Privilege
 
-EdLight follows the **principle of least privilege** — every employee should only have access to the tools, systems, and data they need to do their job. Nothing more.
+EdLight follows the **principle of least privilege**, every employee should only have access to the tools, systems, and data they need to do their job. Nothing more.
 
 This limits the damage that can occur if an account is compromised and reduces the risk of accidental data exposure.
 
@@ -441,7 +441,7 @@ When an employee leaves or changes roles:
 Digital security extends to physical spaces:
 
 - Do not let visitors, contractors, or unauthorized individuals follow you through secured doors (tailgating)
-- Lock your workstation whenever you step away — even briefly
+- Lock your workstation whenever you step away, even briefly
 - Do not allow others to view your screen in sensitive areas
 - Report any physical security concerns to facility management or IT
 
@@ -449,11 +449,11 @@ Digital security extends to physical spaces:
 
 EdLight classifies data into three levels:
 
-**Public** — Information that can be shared externally (marketing materials, published announcements)
+**Public**, Information that can be shared externally (marketing materials, published announcements)
 
-**Internal** — Information meant for employees only (internal policies, general communications)
+**Internal**, Information meant for employees only (internal policies, general communications)
 
-**Confidential** — Sensitive information with restricted access (financial data, personal employee data, security configurations)
+**Confidential**, Sensitive information with restricted access (financial data, personal employee data, security configurations)
 
 Never share Confidential data outside of authorized channels. When in doubt, treat it as Confidential.
 
@@ -464,7 +464,7 @@ Never share Confidential data outside of authorized channels. When in doubt, tre
 - Do not install unauthorized software on company devices
     `,
     keyTakeaways: [
-      "You should only have access to systems you need for your job — nothing more.",
+      "You should only have access to systems you need for your job, nothing more.",
       "Never share your credentials or use someone else's account.",
       "Report role changes and departures to IT immediately so access can be adjusted.",
       "Lock your workstation whenever you step away.",
@@ -473,7 +473,7 @@ Never share Confidential data outside of authorized channels. When in doubt, tre
     realLifeExample: {
       title: "The Shared Login",
       scenario:
-        "Two teammates shared login credentials to a shared reporting tool because requesting individual access 'took too long.' One employee left the company, but the account — still shared — remained active. A third party used those credentials months later to export sensitive company data.",
+        "Two teammates shared login credentials to a shared reporting tool because requesting individual access 'took too long.' One employee left the company, but the account, still shared, remained active. A third party used those credentials months later to export sensitive company data.",
       lesson:
         "Shared accounts make accountability impossible. Each person must have individual credentials, and access must be revoked as soon as someone leaves.",
     },
@@ -491,7 +491,7 @@ Never share Confidential data outside of authorized channels. When in doubt, tre
         ],
         correctAnswer: "Employees should only have access to what they need for their role",
         explanation:
-          "Least privilege limits exposure — if an account is compromised, attackers can only access a limited set of resources.",
+          "Least privilege limits exposure, if an account is compromised, attackers can only access a limited set of resources.",
       },
       {
         id: "q4-2",
@@ -499,7 +499,7 @@ Never share Confidential data outside of authorized channels. When in doubt, tre
         question: "A colleague is on vacation and asks you to log in to their account to complete an urgent task. What do you do?",
         type: "multiple_choice",
         options: [
-          "Log in — it's an emergency and your colleague gave consent",
+          "Log in, it's an emergency and your colleague gave consent",
           "Refuse and escalate through proper IT or management channels",
           "Log in but only briefly",
           "Use your credentials but access their files directly",
@@ -516,10 +516,10 @@ Never share Confidential data outside of authorized channels. When in doubt, tre
         options: [
           "Within a week",
           "At the end of their notice period",
-          "The same day — immediately",
+          "The same day, immediately",
           "After IT runs its monthly access review",
         ],
-        correctAnswer: "The same day — immediately",
+        correctAnswer: "The same day, immediately",
         explanation:
           "Access for departing employees must be revoked immediately to prevent unauthorized access after they leave.",
       },
@@ -528,7 +528,7 @@ Never share Confidential data outside of authorized channels. When in doubt, tre
         moduleId: "module-4",
         question: "You step away from your desk for 5 minutes. What should you do?",
         type: "true_false",
-        options: ["Lock your workstation", "Leave it — it's only 5 minutes"],
+        options: ["Lock your workstation", "Leave it, it's only 5 minutes"],
         correctAnswer: "Lock your workstation",
         explanation:
           "Even a brief absence is enough for someone to access sensitive information. Always lock your screen when stepping away.",
@@ -553,7 +553,7 @@ Never share Confidential data outside of authorized channels. When in doubt, tre
     lectureContent: `
 ## Securing Your Devices and Networks
 
-Your work devices — laptop, phone, tablet — are gateways to all of EdLight's systems and data. Keeping them secure is one of the most important things you can do as an employee.
+Your work devices, laptop, phone, tablet, are gateways to all of EdLight's systems and data. Keeping them secure is one of the most important things you can do as an employee.
 
 ### Keep Software Updated
 
@@ -577,7 +577,7 @@ Every company device must have disk encryption enabled (e.g., FileVault on Mac, 
 - Never leave your laptop unattended in a public place
 - Use a laptop lock when working in shared spaces
 - Do not leave a device in a visible location inside your car
-- If you must travel with a device, keep it in carry-on luggage — never in checked bags
+- If you must travel with a device, keep it in carry-on luggage, never in checked bags
 - Use a privacy screen in public spaces to prevent shoulder surfing
 
 ### Network Security
@@ -586,7 +586,7 @@ Every company device must have disk encryption enabled (e.g., FileVault on Mac, 
 The office network is managed and monitored by IT. It's the safest place to work from.
 
 **Home Network**
-- Use a strong, unique Wi-Fi password — not the default from the router
+- Use a strong, unique Wi-Fi password, not the default from the router
 - Keep your router firmware updated
 - Use WPA3 or WPA2 encryption on your home network
 - Consider a separate network for smart home devices
@@ -601,7 +601,7 @@ The office network is managed and monitored by IT. It's the safest place to work
 - Never plug an unknown USB drive into a company device
 - Attackers plant USB drives in parking lots and public spaces knowing curious people will plug them in
 - Only use company-approved external storage devices
-- Report any found USB drives to IT — do not plug them in to check what's on them
+- Report any found USB drives to IT, do not plug them in to check what's on them
 
 ### Antivirus and Endpoint Protection
 
@@ -610,7 +610,7 @@ The office network is managed and monitored by IT. It's the safest place to work
 - Report unusual device behavior (slowness, unexpected activity) to IT immediately
     `,
     keyTakeaways: [
-      "Always install software and OS updates promptly — they fix critical security vulnerabilities.",
+      "Always install software and OS updates promptly, they fix critical security vulnerabilities.",
       "Ensure your work device has disk encryption enabled.",
       "Report lost or stolen devices to IT within 1 hour.",
       "Use the EdLight VPN on any non-office network.",
@@ -619,7 +619,7 @@ The office network is managed and monitored by IT. It's the safest place to work
     realLifeExample: {
       title: "The Airport USB Drive",
       scenario:
-        "An employee found a USB drive in an airport lounge with a 'Confidential Salary Data' label. Curious, they plugged it into their work laptop to see what it contained. The drive automatically installed malware that gave attackers remote access to the laptop — and through it, the company's internal systems.",
+        "An employee found a USB drive in an airport lounge with a 'Confidential Salary Data' label. Curious, they plugged it into their work laptop to see what it contained. The drive automatically installed malware that gave attackers remote access to the laptop, and through it, the company's internal systems.",
       lesson:
         "Attackers deliberately label USB drives with enticing labels and leave them in high-traffic areas. Never plug in a device you didn't prepare yourself.",
     },
@@ -647,10 +647,10 @@ The office network is managed and monitored by IT. It's the safest place to work
         options: [
           "Next time you have a free week",
           "Only if IT tells you to",
-          "As soon as possible — updates often contain critical security patches",
-          "Never — updates can break things",
+          "As soon as possible, updates often contain critical security patches",
+          "Never, updates can break things",
         ],
-        correctAnswer: "As soon as possible — updates often contain critical security patches",
+        correctAnswer: "As soon as possible, updates often contain critical security patches",
         explanation:
           "Updates fix known vulnerabilities. Delayed updates leave your device exposed to attacks that exploit those vulnerabilities.",
       },

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { CheckCircle2, XCircle, ChevronRight, ChevronLeft } from "lucide-react";
+import { useState, useEffect } from "react";
+import { CheckCircle2, XCircle, ChevronRight } from "lucide-react";
 import { QuizQuestion } from "@/types";
 import { cn } from "@/lib/cn";
 
@@ -16,10 +16,17 @@ export default function QuizSection({ questions, onComplete }: QuizSectionProps)
   const [checked, setChecked] = useState(false);
   const [answers, setAnswers] = useState<{ correct: boolean }[]>([]);
   const [finished, setFinished] = useState(false);
+  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
 
   const question = questions[currentIndex];
   const isCorrect = selected === question?.correctAnswer;
-  const allAnswered = answers.length === questions.length;
+
+  useEffect(() => {
+    if (!checked) return;
+    setFeedback(isCorrect ? "correct" : "wrong");
+    const t = setTimeout(() => setFeedback(null), 900);
+    return () => clearTimeout(t);
+  }, [checked, isCorrect]);
 
   function handleSelect(option: string) {
     if (checked) return;
@@ -39,7 +46,9 @@ export default function QuizSection({ questions, onComplete }: QuizSectionProps)
       setChecked(false);
     } else {
       setFinished(true);
-      const correctCount = answers.filter((a) => a.correct).length + (selected === question.correctAnswer ? 1 : 0);
+      const correctCount =
+        answers.filter((a) => a.correct).length +
+        (selected === question.correctAnswer ? 1 : 0);
       onComplete(Math.round((correctCount / questions.length) * 100));
     }
   }
@@ -50,23 +59,27 @@ export default function QuizSection({ questions, onComplete }: QuizSectionProps)
     );
     return (
       <div className="text-center py-8">
+        <style>{`
+          @keyframes quiz-pop { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.15); opacity: 1; } 100% { transform: scale(1); } }
+        `}</style>
         <div
+          style={{ animation: "quiz-pop 0.5s cubic-bezier(0.34,1.56,0.64,1) both" }}
           className={cn(
             "h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-4",
-            score >= 75 ? "bg-teal-50" : "bg-amber-50"
+            score >= 75 ? "bg-emerald-50" : "bg-amber-50"
           )}
         >
           {score >= 75 ? (
-            <CheckCircle2 className="h-8 w-8 text-teal-600" />
+            <CheckCircle2 className="h-8 w-8 text-emerald-600" />
           ) : (
             <XCircle className="h-8 w-8 text-amber-500" />
           )}
         </div>
         <h3 className="text-xl font-bold text-slate-900 mb-2">
-          {score >= 75 ? "Great work!" : "Keep Practicing"}
+          {score >= 75 ? "Nicely done." : "Worth another look."}
         </h3>
         <p className="text-slate-500 mb-1">You scored</p>
-        <p className="text-4xl font-bold text-teal-600 mb-4">{score}%</p>
+        <p className="text-4xl font-bold text-emerald-600 mb-4">{score}%</p>
         <p className="text-sm text-slate-500">
           {answers.filter((a) => a.correct).length} of {questions.length} questions correct
         </p>
@@ -75,7 +88,19 @@ export default function QuizSection({ questions, onComplete }: QuizSectionProps)
   }
 
   return (
-    <div>
+    <div className={cn(feedback === "wrong" && "quiz-shake")}>
+      <style>{`
+        @keyframes quiz-shake { 0%,100% { transform: translateX(0); } 15% { transform: translateX(-8px); } 30% { transform: translateX(7px); } 45% { transform: translateX(-5px); } 60% { transform: translateX(4px); } 75% { transform: translateX(-2px); } }
+        @keyframes quiz-bounce { 0% { transform: scale(1); } 30% { transform: scale(1.04); } 60% { transform: scale(0.99); } 100% { transform: scale(1); } }
+        @keyframes quiz-glow { 0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.55); } 70% { box-shadow: 0 0 0 14px rgba(16,185,129,0); } 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); } }
+        @keyframes quiz-burst { 0% { transform: scale(0.4); opacity: 1; } 100% { transform: scale(1.6); opacity: 0; } }
+        @keyframes quiz-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .quiz-shake { animation: quiz-shake 0.5s ease-in-out; }
+        .quiz-correct { animation: quiz-bounce 0.5s ease-out, quiz-glow 0.9s ease-out; }
+        .quiz-burst { animation: quiz-burst 0.7s ease-out forwards; }
+        .quiz-feedback { animation: quiz-fade-in 0.25s ease-out both; }
+      `}</style>
+
       {/* Progress */}
       <div className="flex items-center justify-between mb-5">
         <span className="text-sm font-medium text-slate-600">
@@ -89,10 +114,10 @@ export default function QuizSection({ questions, onComplete }: QuizSectionProps)
                 "h-1.5 w-8 rounded-full transition-colors",
                 i < currentIndex
                   ? answers[i]?.correct
-                    ? "bg-teal-500"
-                    : "bg-red-400"
+                    ? "bg-emerald-500"
+                    : "bg-rose-400"
                   : i === currentIndex
-                  ? "bg-teal-300"
+                  ? "bg-emerald-300"
                   : "bg-slate-200"
               )}
             />
@@ -118,32 +143,39 @@ export default function QuizSection({ questions, onComplete }: QuizSectionProps)
               onClick={() => handleSelect(option)}
               disabled={checked}
               className={cn(
-                "w-full text-left rounded-xl border px-4 py-3.5 text-sm font-medium transition-all",
+                "relative w-full text-left rounded-xl border px-4 py-3.5 text-sm font-medium transition-all",
                 isRight
-                  ? "border-teal-300 bg-teal-50 text-teal-800"
+                  ? "border-emerald-300 bg-emerald-50 text-emerald-800 quiz-correct"
                   : isWrong
-                  ? "border-red-300 bg-red-50 text-red-800"
+                  ? "border-rose-300 bg-rose-50 text-rose-800"
                   : isSelected
-                  ? "border-teal-400 bg-teal-50 text-teal-800"
+                  ? "border-emerald-400 bg-emerald-50 text-emerald-800"
                   : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50"
               )}
             >
-              <div className="flex items-center gap-3">
+              {isRight && (
+                <span
+                  aria-hidden
+                  className="quiz-burst absolute inset-0 rounded-xl pointer-events-none"
+                  style={{ background: "radial-gradient(circle, rgba(16,185,129,0.35), transparent 60%)" }}
+                />
+              )}
+              <div className="relative flex items-center gap-3">
                 <div
                   className={cn(
                     "h-4 w-4 rounded-full border-2 flex-shrink-0",
                     isRight
-                      ? "border-teal-500 bg-teal-500"
+                      ? "border-emerald-500 bg-emerald-500"
                       : isWrong
-                      ? "border-red-500 bg-red-500"
+                      ? "border-rose-500 bg-rose-500"
                       : isSelected
-                      ? "border-teal-500 bg-teal-500"
+                      ? "border-emerald-500 bg-emerald-500"
                       : "border-slate-300 bg-white"
                   )}
                 />
                 {option}
-                {isRight && <CheckCircle2 className="ml-auto h-4 w-4 text-teal-600" />}
-                {isWrong && <XCircle className="ml-auto h-4 w-4 text-red-500" />}
+                {isRight && <CheckCircle2 className="ml-auto h-4 w-4 text-emerald-600" />}
+                {isWrong && <XCircle className="ml-auto h-4 w-4 text-rose-500" />}
               </div>
             </button>
           );
@@ -154,14 +186,14 @@ export default function QuizSection({ questions, onComplete }: QuizSectionProps)
       {checked && (
         <div
           className={cn(
-            "rounded-xl border p-4 mb-6",
-            isCorrect ? "bg-teal-50 border-teal-100" : "bg-red-50 border-red-100"
+            "quiz-feedback rounded-xl border p-4 mb-6",
+            isCorrect ? "bg-emerald-50 border-emerald-100" : "bg-rose-50 border-rose-100"
           )}
         >
-          <p className={cn("text-sm font-semibold mb-1", isCorrect ? "text-teal-800" : "text-red-700")}>
-            {isCorrect ? "Correct!" : "Not quite."}
+          <p className={cn("text-sm font-semibold mb-1", isCorrect ? "text-emerald-800" : "text-rose-700")}>
+            {isCorrect ? "That's it." : "Not quite, here's why."}
           </p>
-          <p className={cn("text-sm leading-relaxed", isCorrect ? "text-teal-700" : "text-red-600")}>
+          <p className={cn("text-sm leading-relaxed", isCorrect ? "text-emerald-700" : "text-rose-600")}>
             {question.explanation}
           </p>
         </div>
@@ -170,21 +202,21 @@ export default function QuizSection({ questions, onComplete }: QuizSectionProps)
       {/* Actions */}
       <div className="flex justify-between items-center">
         <span className="text-xs text-slate-400">
-          {selected && !checked ? "Ready to check?" : !selected ? "Select an answer" : ""}
+          {selected && !checked ? "Ready to check?" : !selected ? "Pick an answer to continue." : ""}
         </span>
         <div className="flex gap-3">
           {!checked ? (
             <button
               onClick={handleCheck}
               disabled={!selected}
-              className="rounded-xl bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-teal-700 transition-colors"
+              className="rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-emerald-700 transition-colors"
             >
               Check Answer
             </button>
           ) : (
             <button
               onClick={handleNext}
-              className="flex items-center gap-2 rounded-xl bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-teal-700 transition-colors"
+              className="flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 transition-colors"
             >
               {currentIndex + 1 < questions.length ? "Next Question" : "Finish Quiz"}
               <ChevronRight className="h-4 w-4" />
