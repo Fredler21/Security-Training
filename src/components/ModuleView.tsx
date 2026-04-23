@@ -97,14 +97,19 @@ export default function ModuleView({ module }: ModuleViewProps) {
 
   function handleQuizComplete(score: number) {
     setQuizScore(score);
+    // Auto-save completion as soon as the quiz finishes (passing or not).
+    // Admin sees attempts + score; employee no longer needs an extra click.
+    if (user && !completed && !saving) {
+      void persistCompletion(score);
+    }
   }
 
-  async function handleMarkComplete() {
-    if (!user || quizScore === null) return;
+  async function persistCompletion(score: number) {
+    if (!user) return;
     setSaving(true);
     setSaveError(null);
     try {
-      await saveModuleCompletion(user.uid, module.id, quizScore, modules.length, module.title);
+      await saveModuleCompletion(user.uid, module.id, score, modules.length, module.title);
       setCompleted(true);
     } catch (err) {
       console.error("Failed to save module completion", err);
@@ -116,6 +121,11 @@ export default function ModuleView({ module }: ModuleViewProps) {
     } finally {
       setSaving(false);
     }
+  }
+
+  async function handleMarkComplete() {
+    if (quizScore === null) return;
+    await persistCompletion(quizScore);
   }
 
   const colorMap: Record<string, string> = {
@@ -344,6 +354,12 @@ export default function ModuleView({ module }: ModuleViewProps) {
               {saveError && (
                 <div className="w-full bg-rose-50 border border-rose-200 text-rose-700 text-sm rounded-xl px-4 py-3">
                   {saveError}
+                </div>
+              )}
+              {saving && !saveError && (
+                <div className="w-full bg-sky-50 border border-sky-200 text-sky-700 text-sm rounded-xl px-4 py-3 flex items-center gap-2">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Saving your progress…
                 </div>
               )}
               <button
