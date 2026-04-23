@@ -9,12 +9,12 @@ import { useAuth } from "@/context/AuthContext";
 import { useProgress } from "@/hooks/useProgress";
 import { db } from "@/lib/firebase";
 
-// Dashboard palette — emerald + indigo (different from landing's blue)
-const emerald = "#10b981";
-const emeraldDeep = "#047857";
-const emeraldLight = "#34d399";
-const indigo = "#6366f1";
-const violet = "#7c3aed";
+// Dashboard palette — refined blue (matches landing for a unified professional look)
+const blue = "#0ea5e9";
+const blueDeep = "#0369a1";
+const blueLight = "#38bdf8";
+const slate700 = "#334155";
+const success = "#059669";
 
 const text = "#0f172a";
 const textMuted = "#64748b";
@@ -52,44 +52,32 @@ export default function DashboardPage() {
   const firstName = user?.displayName?.split(" ")[0] ?? "there";
 
   const stats = [
-    { label: "Overall Progress", value: loading ? "—" : `${overallPercent}%`, sub: `${completedCount} of ${modules.length} modules`, icon: "trending_up", color: emerald },
-    { label: "Completed", value: loading ? "—" : `${completedCount}`, sub: "modules finished", icon: "check_circle", color: emeraldLight },
-    { label: "In Progress", value: loading ? "—" : `${inProgressCount}`, sub: "currently active", icon: "auto_stories", color: indigo },
-    { label: "Remaining", value: loading ? "—" : `${remainingCount}`, sub: "left to complete", icon: "schedule", color: violet },
+    { label: "Overall Progress", value: loading ? "\u2014" : `${overallPercent}%`, sub: `${completedCount} of ${modules.length} modules`, icon: "trending_up", color: blueDeep },
+    { label: "Completed", value: loading ? "\u2014" : `${completedCount}`, sub: "modules finished", icon: "check_circle", color: success },
+    { label: "In Progress", value: loading ? "\u2014" : `${inProgressCount}`, sub: "currently active", icon: "auto_stories", color: blue },
+    { label: "Remaining", value: loading ? "\u2014" : `${remainingCount}`, sub: "left to complete", icon: "schedule", color: slate700 },
   ];
 
   return (
     <div style={{ padding: "40px clamp(20px, 5vw, 48px)", maxWidth: "1200px", margin: "0 auto", color: text }}>
       <style>{`
-        @keyframes dash-fade-up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes dash-headline-shift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        @keyframes dash-fade-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes dash-pulse-ring { 0% { transform: scale(0.95); opacity: 0.5; } 70% { transform: scale(1.35); opacity: 0; } 100% { opacity: 0; } }
-        @keyframes dash-shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-        .dash-fade { animation: dash-fade-up 0.6s ease-out both; }
-        .dash-headline-grad {
-          background-image: linear-gradient(120deg, ${emeraldDeep} 0%, ${emerald} 35%, ${emeraldLight} 65%, ${emeraldDeep} 100%);
-          background-size: 220% auto;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          animation: dash-headline-shift 7s ease-in-out infinite;
-        }
-        .dash-card { transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; box-shadow: 0 1px 3px rgba(15,23,42,0.04); }
-        .dash-card:hover { transform: translateY(-4px); border-color: rgba(16,185,129,0.4) !important; box-shadow: 0 14px 36px rgba(16,185,129,0.18); }
-        .dash-cta-btn { position: relative; overflow: hidden; }
-        .dash-cta-btn::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); background-size: 200% 100%; animation: dash-shimmer 3.5s linear infinite; pointer-events: none; }
+        .dash-fade { animation: dash-fade-up 0.5s ease-out both; }
+        .dash-card { transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 1px 3px rgba(15,23,42,0.04); }
+        .dash-card:hover { transform: translateY(-3px); border-color: rgba(14,165,233,0.35) !important; box-shadow: 0 10px 28px rgba(15,23,42,0.08); }
       `}</style>
 
       {/* Header */}
       <div className="dash-fade" style={{ display: "flex", flexDirection: "column", gap: "18px", marginBottom: "36px" }}>
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
           <div>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "5px 12px", borderRadius: "999px", background: "rgba(16,185,129,0.1)", border: `1px solid ${emerald}33`, marginBottom: "12px" }}>
-              <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: emerald, boxShadow: `0 0 8px ${emerald}` }} />
-              <span style={{ fontSize: "11px", fontWeight: 700, color: emeraldLight, letterSpacing: "0.08em", textTransform: "uppercase" }}>Welcome back</span>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "5px 12px", borderRadius: "999px", background: "rgba(14,165,233,0.08)", border: `1px solid ${blue}33`, marginBottom: "12px" }}>
+              <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: blue }} />
+              <span style={{ fontSize: "11px", fontWeight: 700, color: blueDeep, letterSpacing: "0.08em", textTransform: "uppercase" }}>Welcome back</span>
             </div>
-            <h1 style={{ fontSize: "clamp(28px, 3.5vw, 38px)", fontWeight: 800, letterSpacing: "-0.025em", margin: "0 0 6px", lineHeight: 1.1 }}>
-              Hi <span className="dash-headline-grad">{firstName}</span>
+            <h1 style={{ fontSize: "clamp(26px, 3.2vw, 34px)", fontWeight: 700, letterSpacing: "-0.022em", margin: "0 0 6px", lineHeight: 1.15, color: text }}>
+              Hi {firstName}
             </h1>
             {(profile?.jobTitle || profile?.department) && (
               <p style={{ fontSize: "14px", color: textMuted, margin: 0 }}>
@@ -98,7 +86,7 @@ export default function DashboardPage() {
             )}
           </div>
           <div style={{ display: "inline-flex", alignItems: "center", gap: "10px", padding: "10px 14px", borderRadius: "12px", background: cardBg, border: `1px solid ${border}`, backdropFilter: "blur(10px)" }}>
-            <span className="material-symbols-outlined" style={{ fontSize: "18px", color: emeraldLight }}>notifications_active</span>
+            <span className="material-symbols-outlined" style={{ fontSize: "18px", color: blueDeep }}>notifications_active</span>
             <span style={{ fontSize: "13px", color: text, fontWeight: 500 }}>
               {remainingCount > 0 ? `${remainingCount} module${remainingCount !== 1 ? "s" : ""} remaining` : "All modules complete"}
             </span>
@@ -139,7 +127,7 @@ export default function DashboardPage() {
 
       {/* Progress Panel */}
       <div className="dash-fade" style={{ position: "relative", padding: "26px 28px", borderRadius: "18px", background: cardBg, border: `1px solid ${border}`, marginBottom: "32px", overflow: "hidden", animationDelay: "0.35s" }}>
-        <div aria-hidden style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", backgroundImage: `linear-gradient(90deg, ${emeraldDeep}, ${emerald}, ${emeraldLight})` }} />
+        <div aria-hidden style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", backgroundImage: `linear-gradient(90deg, ${blueDeep}, ${blue}, ${blueLight})` }} />
 
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: "14px", marginBottom: "20px" }}>
           <div>
@@ -147,7 +135,7 @@ export default function DashboardPage() {
             <p style={{ fontSize: "13px", color: textMuted, margin: 0 }}>{completedCount} of {modules.length} modules completed</p>
           </div>
           <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
-            <span style={{ fontSize: "32px", fontWeight: 800, letterSpacing: "-0.02em" }} className="dash-headline-grad">{overallPercent}%</span>
+            <span style={{ fontSize: "32px", fontWeight: 800, letterSpacing: "-0.02em", color: blueDeep }}>{overallPercent}%</span>
           </div>
         </div>
 
@@ -159,8 +147,8 @@ export default function DashboardPage() {
               inset: "0 auto 0 0",
               width: `${overallPercent}%`,
               borderRadius: "999px",
-              backgroundImage: `linear-gradient(90deg, ${emeraldDeep}, ${emerald}, ${emeraldLight})`,
-              boxShadow: `0 0 12px ${emerald}77`,
+              backgroundImage: `linear-gradient(90deg, ${blueDeep}, ${blue}, ${blueLight})`,
+              boxShadow: `0 0 12px ${blue}77`,
               transition: "width 0.6s ease",
             }}
           />
@@ -170,12 +158,12 @@ export default function DashboardPage() {
         <div style={{ display: "grid", gridTemplateColumns: `repeat(${modules.length}, 1fr)`, gap: "6px" }}>
           {modules.map((m) => {
             const s = getModuleProgress(m.id).status;
-            const color = s === "completed" ? emerald : s === "in_progress" ? indigo : "#e2e8f0";
+            const color = s === "completed" ? blue : s === "in_progress" ? blueDeep : "#e2e8f0";
             return (
               <div
                 key={m.id}
                 title={m.title}
-                style={{ height: "6px", borderRadius: "999px", background: color, boxShadow: s === "completed" ? `0 0 6px ${emerald}99` : "none", transition: "background 0.3s" }}
+                style={{ height: "6px", borderRadius: "999px", background: color, boxShadow: s === "completed" ? `0 0 6px ${blue}99` : "none", transition: "background 0.3s" }}
               />
             );
           })}
@@ -184,7 +172,7 @@ export default function DashboardPage() {
 
       {/* Continue Learning */}
       {nextModule && !loading && (
-        <div className="dash-fade" style={{ position: "relative", padding: "28px clamp(20px, 3vw, 32px)", borderRadius: "20px", marginBottom: "32px", overflow: "hidden", backgroundImage: `linear-gradient(135deg, ${emeraldDeep} 0%, ${emerald} 100%)`, boxShadow: `0 16px 44px ${emerald}55`, animationDelay: "0.45s" }}>
+        <div className="dash-fade" style={{ position: "relative", padding: "28px clamp(20px, 3vw, 32px)", borderRadius: "20px", marginBottom: "32px", overflow: "hidden", backgroundImage: `linear-gradient(135deg, ${blueDeep} 0%, ${blue} 100%)`, boxShadow: `0 16px 44px ${blue}55`, animationDelay: "0.45s" }}>
           <div aria-hidden style={{ position: "absolute", top: "-80px", right: "-60px", width: "240px", height: "240px", borderRadius: "50%", background: "radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%)", pointerEvents: "none" }} />
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "20px", position: "relative", zIndex: 1 }}>
@@ -202,7 +190,6 @@ export default function DashboardPage() {
             </div>
             <Link
               href={`/modules/${nextModule.slug}`}
-              className="dash-cta-btn"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -211,7 +198,7 @@ export default function DashboardPage() {
                 padding: "13px 22px",
                 borderRadius: "12px",
                 background: "#fff",
-                color: emeraldDeep,
+                color: blueDeep,
                 fontSize: "14px",
                 fontWeight: 700,
                 textDecoration: "none",
@@ -230,10 +217,10 @@ export default function DashboardPage() {
 
       {/* All complete celebration */}
       {completedCount === modules.length && !loading && (
-        <div className="dash-fade" style={{ padding: "22px 24px", borderRadius: "16px", background: "rgba(16,185,129,0.1)", border: `1px solid ${emerald}44`, marginBottom: "32px", display: "flex", alignItems: "center", gap: "16px" }}>
+        <div className="dash-fade" style={{ padding: "22px 24px", borderRadius: "16px", background: "rgba(14,165,233,0.1)", border: `1px solid ${blue}44`, marginBottom: "32px", display: "flex", alignItems: "center", gap: "16px" }}>
           <div style={{ position: "relative", width: "44px", height: "44px", flexShrink: 0 }}>
-            <span aria-hidden style={{ position: "absolute", inset: 0, borderRadius: "50%", border: `2px solid ${emerald}55`, animation: "dash-pulse-ring 2.2s ease-out infinite" }} />
-            <div style={{ width: "44px", height: "44px", borderRadius: "50%", backgroundImage: `linear-gradient(135deg, ${emeraldDeep}, ${emerald})`, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 6px 16px ${emerald}66` }}>
+            <span aria-hidden style={{ position: "absolute", inset: 0, borderRadius: "50%", border: `2px solid ${blue}55`, animation: "dash-pulse-ring 2.2s ease-out infinite" }} />
+            <div style={{ width: "44px", height: "44px", borderRadius: "50%", backgroundImage: `linear-gradient(135deg, ${blueDeep}, ${blue})`, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 6px 16px ${blue}66` }}>
               <span className="material-symbols-outlined" style={{ color: "#fff", fontSize: "24px" }}>emoji_events</span>
             </div>
           </div>
@@ -248,13 +235,13 @@ export default function DashboardPage() {
       <div className="dash-fade" style={{ animationDelay: "0.55s" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "20px" }}>
           <div>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "7px", padding: "4px 10px", borderRadius: "999px", background: "rgba(99,102,241,0.1)", border: `1px solid ${indigo}33`, marginBottom: "8px" }}>
-              <span className="material-symbols-outlined" style={{ fontSize: "13px", color: indigo }}>library_books</span>
-              <span style={{ fontSize: "10.5px", fontWeight: 700, color: indigo, letterSpacing: "0.08em", textTransform: "uppercase" }}>Modules</span>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "7px", padding: "4px 10px", borderRadius: "999px", background: "rgba(3,105,161,0.1)", border: `1px solid ${blueDeep}33`, marginBottom: "8px" }}>
+              <span className="material-symbols-outlined" style={{ fontSize: "13px", color: blueDeep }}>library_books</span>
+              <span style={{ fontSize: "10.5px", fontWeight: 700, color: blueDeep, letterSpacing: "0.08em", textTransform: "uppercase" }}>Modules</span>
             </div>
             <h2 style={{ fontSize: "20px", fontWeight: 700, color: text, margin: 0, letterSpacing: "-0.015em" }}>All Training Modules</h2>
           </div>
-          <Link href="/modules" style={{ fontSize: "13px", color: emeraldLight, fontWeight: 600, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "4px" }}>
+          <Link href="/modules" style={{ fontSize: "13px", color: blueDeep, fontWeight: 600, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "4px" }}>
             View all
             <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>arrow_forward</span>
           </Link>

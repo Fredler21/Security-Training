@@ -4,9 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { TrainingModule, ModuleStatus } from "@/types";
 
-const emerald = "#10b981";
-const emeraldDeep = "#047857";
-const emeraldLight = "#34d399";
+const blue = "#0ea5e9";
+const blueDeep = "#0369a1";
+const blueLight = "#38bdf8";
 const indigo = "#6366f1";
 
 const accentMap: Record<string, { a: string; b: string }> = {
@@ -32,7 +32,7 @@ export default function ModuleCard({
 
   const statusPill =
     status === "completed"
-      ? { label: "Completed", bg: "#ecfdf5", border: "#a7f3d0", color: emeraldDeep, icon: "check_circle" }
+      ? { label: "Completed", bg: "#ecfdf5", border: "#a7f3d0", color: blueDeep, icon: "check_circle" }
       : status === "in_progress"
       ? { label: "In Progress", bg: "#eef2ff", border: "#c7d2fe", color: "#4338ca", icon: "play_arrow" }
       : { label: "Not Started", bg: "#f8fafc", border: "#e2e8f0", color: "#475569", icon: "circle" };
@@ -57,9 +57,9 @@ export default function ModuleCard({
       }}
     >
       <style>{`
-        .dash-module-card:hover { transform: translateY(-5px); border-color: rgba(16,185,129,0.4) !important; box-shadow: 0 18px 44px rgba(16,185,129,0.18); }
+        .dash-module-card:hover { transform: translateY(-5px); border-color: rgba(14,165,233,0.4) !important; box-shadow: 0 18px 44px rgba(14,165,233,0.18); }
         .dash-module-card:hover .dash-mod-img { transform: scale(1.07); }
-        .dash-module-card:hover .dash-mod-cta { gap: 8px; color: ${emeraldDeep} !important; }
+        .dash-module-card:hover .dash-mod-cta { gap: 8px; color: ${blueDeep} !important; }
         .dash-module-card:hover .dash-mod-arrow { transform: translateX(3px); }
       `}</style>
 
@@ -101,7 +101,7 @@ export default function ModuleCard({
               <span>Progress</span><span>{progress}%</span>
             </div>
             <div style={{ height: "5px", borderRadius: "999px", background: "#e2e8f0", overflow: "hidden" }}>
-              <div style={{ width: `${progress}%`, height: "100%", borderRadius: "999px", backgroundImage: `linear-gradient(90deg, ${emeraldDeep}, ${emeraldLight})`, boxShadow: `0 0 8px ${emerald}66` }} />
+              <div style={{ width: `${progress}%`, height: "100%", borderRadius: "999px", backgroundImage: `linear-gradient(90deg, ${blueDeep}, ${blueLight})`, boxShadow: `0 0 8px ${blue}66` }} />
             </div>
           </div>
         )}
@@ -112,7 +112,7 @@ export default function ModuleCard({
             <span className="material-symbols-outlined" style={{ fontSize: "14px" }}>schedule</span>
             {module.estimatedMinutes} min
           </div>
-          <span className="dash-mod-cta" style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "12px", fontWeight: 700, color: status === "completed" ? emeraldDeep : "#475569", transition: "all 0.2s", letterSpacing: "-0.005em" }}>
+          <span className="dash-mod-cta" style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "12px", fontWeight: 700, color: status === "completed" ? blueDeep : "#475569", transition: "all 0.2s", letterSpacing: "-0.005em" }}>
             {ctaText}
             <span className="material-symbols-outlined dash-mod-arrow" style={{ fontSize: "15px", transition: "transform 0.2s" }}>arrow_forward</span>
           </span>

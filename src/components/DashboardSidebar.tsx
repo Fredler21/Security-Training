@@ -38,10 +38,10 @@ const adminNavItems = [
   { label: "Assignments", href: "/admin/assignments", icon: ClipboardList },
 ];
 
-// Dashboard palette — emerald + indigo (distinct from landing's blue)
-const emerald = "#10b981";
-const emeraldDeep = "#047857";
-const emeraldLight = "#34d399";
+// Dashboard palette — refined blue (matches landing)
+const blue = "#0ea5e9";
+const blueDeep = "#0369a1";
+const blueLight = "#38bdf8";
 const indigo = "#6366f1";
 
 type IconType = React.ComponentType<{ size?: number | string; style?: React.CSSProperties }>;
@@ -97,9 +97,9 @@ export default function DashboardSidebar() {
         fontSize: "13.5px",
         fontWeight: 600,
         letterSpacing: "-0.005em",
-        color: active ? emeraldLight : textMuted,
-        background: active ? `linear-gradient(90deg, ${emerald}22, transparent)` : "transparent",
-        borderLeft: active ? `2px solid ${emerald}` : "2px solid transparent",
+        color: active ? blueLight : textMuted,
+        background: active ? `linear-gradient(90deg, ${blue}22, transparent)` : "transparent",
+        borderLeft: active ? `2px solid ${blue}` : "2px solid transparent",
         textDecoration: "none",
         transition: "all 0.18s ease",
       }}
@@ -116,9 +116,9 @@ export default function DashboardSidebar() {
         }
       }}
     >
-      <Icon size={17} style={{ color: active ? emerald : "currentColor", flexShrink: 0 }} />
+      <Icon size={17} style={{ color: active ? blue : "currentColor", flexShrink: 0 }} />
       <span style={{ flex: 1 }}>{label}</span>
-      {active && <ChevronRight size={14} style={{ color: emerald }} />}
+      {active && <ChevronRight size={14} style={{ color: blue }} />}
     </Link>
   );
 
@@ -139,17 +139,17 @@ export default function DashboardSidebar() {
         @keyframes side-pulse { 0%,100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.25); opacity: 0; } }
       `}</style>
 
-      <div aria-hidden style={{ position: "absolute", top: "-60px", left: "-40px", width: "200px", height: "200px", borderRadius: "50%", background: `radial-gradient(circle, ${emerald}33, transparent 70%)`, filter: "blur(30px)", pointerEvents: "none" }} />
+      <div aria-hidden style={{ position: "absolute", top: "-60px", left: "-40px", width: "200px", height: "200px", borderRadius: "50%", background: `radial-gradient(circle, ${blue}33, transparent 70%)`, filter: "blur(30px)", pointerEvents: "none" }} />
 
       {/* Logo */}
       <div style={{ display: "flex", alignItems: "center", gap: "10px", height: "64px", padding: "0 20px", borderBottom: `1px solid ${border}`, position: "relative", zIndex: 1 }}>
         <div style={{ position: "relative", width: "32px", height: "32px" }}>
           <Image src="/edlight-logo-white.png" alt="EdLight" width={32} height={32} style={{ opacity: 0.95 }} />
-          <span aria-hidden style={{ position: "absolute", inset: "-4px", borderRadius: "50%", border: `1px solid ${emerald}55`, animation: "side-pulse 3s ease-in-out infinite", pointerEvents: "none" }} />
+          <span aria-hidden style={{ position: "absolute", inset: "-4px", borderRadius: "50%", border: `1px solid ${blue}55`, animation: "side-pulse 3s ease-in-out infinite", pointerEvents: "none" }} />
         </div>
         <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.05 }}>
           <span style={{ fontSize: "13px", fontWeight: 700, color: text }}>EdLight</span>
-          <span style={{ fontSize: "12px", fontWeight: 700, backgroundImage: `linear-gradient(135deg, ${emeraldDeep}, ${emeraldLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Security</span>
+          <span style={{ fontSize: "12px", fontWeight: 700, backgroundImage: `linear-gradient(135deg, ${blueDeep}, ${blueLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Security</span>
         </div>
       </div>
 
@@ -177,16 +177,16 @@ export default function DashboardSidebar() {
         <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "10px 12px", borderRadius: "10px", background: "rgba(255,255,255,0.025)", border: `1px solid ${border}` }}>
           {user?.photoURL ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={user.photoURL} alt={user.displayName ?? "User"} referrerPolicy="no-referrer" style={{ width: "34px", height: "34px", borderRadius: "50%", objectFit: "cover", flexShrink: 0, border: `2px solid ${emerald}66` }} />
+            <img src={user.photoURL} alt={user.displayName ?? "User"} referrerPolicy="no-referrer" style={{ width: "34px", height: "34px", borderRadius: "50%", objectFit: "cover", flexShrink: 0, border: `2px solid ${blue}66` }} />
           ) : (
-            <div style={{ width: "34px", height: "34px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: "12px", fontWeight: 700, flexShrink: 0, backgroundImage: `linear-gradient(135deg, ${emeraldDeep}, ${emerald})`, boxShadow: `0 4px 12px ${emerald}44` }}>
+            <div style={{ width: "34px", height: "34px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: "12px", fontWeight: 700, flexShrink: 0, backgroundImage: `linear-gradient(135deg, ${blueDeep}, ${blue})`, boxShadow: `0 4px 12px ${blue}44` }}>
               {initials}
             </div>
           )}
           <div style={{ minWidth: 0, flex: 1 }}>
             <p style={{ fontSize: "13px", fontWeight: 600, color: text, margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{user?.displayName ?? "\u2014"}</p>
             {profile?.jobTitle || profile?.department ? (
-              <p style={{ fontSize: "11px", color: emeraldLight, margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{[profile?.jobTitle, profile?.department].filter(Boolean).join(" \u00b7 ")}</p>
+              <p style={{ fontSize: "11px", color: blueLight, margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{[profile?.jobTitle, profile?.department].filter(Boolean).join(" \u00b7 ")}</p>
             ) : (
               <p style={{ fontSize: "11px", color: textMuted, margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{user?.email ?? ""}</p>
             )}

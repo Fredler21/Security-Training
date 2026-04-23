@@ -117,7 +117,7 @@ export default function QuizSection({ questions, onComplete }: QuizSectionProps)
                     ? "bg-emerald-500"
                     : "bg-rose-400"
                   : i === currentIndex
-                  ? "bg-emerald-300"
+                  ? "bg-sky-400"
                   : "bg-slate-200"
               )}
             />
@@ -149,7 +149,7 @@ export default function QuizSection({ questions, onComplete }: QuizSectionProps)
                   : isWrong
                   ? "border-rose-300 bg-rose-50 text-rose-800"
                   : isSelected
-                  ? "border-emerald-400 bg-emerald-50 text-emerald-800"
+                  ? "border-sky-400 bg-sky-50 text-sky-800"
                   : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50"
               )}
             >
@@ -169,7 +169,7 @@ export default function QuizSection({ questions, onComplete }: QuizSectionProps)
                       : isWrong
                       ? "border-rose-500 bg-rose-500"
                       : isSelected
-                      ? "border-emerald-500 bg-emerald-500"
+                      ? "border-sky-500 bg-sky-500"
                       : "border-slate-300 bg-white"
                   )}
                 />
@@ -209,14 +209,14 @@ export default function QuizSection({ questions, onComplete }: QuizSectionProps)
             <button
               onClick={handleCheck}
               disabled={!selected}
-              className="rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-emerald-700 transition-colors"
+              className="rounded-xl bg-sky-600 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-sky-700 transition-colors"
             >
               Check Answer
             </button>
           ) : (
             <button
               onClick={handleNext}
-              className="flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 transition-colors"
+              className="flex items-center gap-2 rounded-xl bg-sky-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-sky-700 transition-colors"
             >
               {currentIndex + 1 < questions.length ? "Next Question" : "Finish Quiz"}
               <ChevronRight className="h-4 w-4" />
