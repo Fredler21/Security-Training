@@ -1,13 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { CheckCircle2, XCircle, ChevronRight } from "lucide-react";
+import { CheckCircle2, XCircle, ChevronRight, RotateCcw } from "lucide-react";
 import { QuizQuestion } from "@/types";
 import { cn } from "@/lib/cn";
 
+// You can miss at most this many questions and still pass.
+const MAX_WRONG_TO_PASS = 1;
+
 interface QuizSectionProps {
   questions: QuizQuestion[];
-  onComplete: (score: number) => void;
+  onComplete: (score: number, passed: boolean) => void;
 }
 
 export default function QuizSection({ questions, onComplete }: QuizSectionProps) {
@@ -49,14 +52,27 @@ export default function QuizSection({ questions, onComplete }: QuizSectionProps)
       const correctCount =
         answers.filter((a) => a.correct).length +
         (selected === question.correctAnswer ? 1 : 0);
-      onComplete(Math.round((correctCount / questions.length) * 100));
+      const wrongCount = questions.length - correctCount;
+      const score = Math.round((correctCount / questions.length) * 100);
+      const passed = wrongCount <= MAX_WRONG_TO_PASS;
+      onComplete(score, passed);
     }
   }
 
+  function handleRetake() {
+    setCurrentIndex(0);
+    setSelected(null);
+    setChecked(false);
+    setAnswers([]);
+    setFinished(false);
+    setFeedback(null);
+  }
+
   if (finished) {
-    const score = Math.round(
-      (answers.filter((a) => a.correct).length / questions.length) * 100
-    );
+    const correctCount = answers.filter((a) => a.correct).length;
+    const wrongCount = questions.length - correctCount;
+    const score = Math.round((correctCount / questions.length) * 100);
+    const passed = wrongCount <= MAX_WRONG_TO_PASS;
     return (
       <div className="text-center py-8">
         <style>{`
@@ -66,23 +82,47 @@ export default function QuizSection({ questions, onComplete }: QuizSectionProps)
           style={{ animation: "quiz-pop 0.5s cubic-bezier(0.34,1.56,0.64,1) both" }}
           className={cn(
             "h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-4",
-            score >= 75 ? "bg-emerald-50" : "bg-amber-50"
+            passed ? "bg-emerald-50" : "bg-rose-50"
           )}
         >
-          {score >= 75 ? (
+          {passed ? (
             <CheckCircle2 className="h-8 w-8 text-emerald-600" />
           ) : (
-            <XCircle className="h-8 w-8 text-amber-500" />
+            <XCircle className="h-8 w-8 text-rose-500" />
           )}
         </div>
         <h3 className="text-xl font-bold text-slate-900 mb-2">
-          {score >= 75 ? "Nicely done." : "Worth another look."}
+          {passed ? "Nicely done." : "Almost there — give it another go."}
         </h3>
         <p className="text-slate-500 mb-1">You scored</p>
-        <p className="text-4xl font-bold text-emerald-600 mb-4">{score}%</p>
-        <p className="text-sm text-slate-500">
-          {answers.filter((a) => a.correct).length} of {questions.length} questions correct
+        <p
+          className={cn(
+            "text-4xl font-bold mb-3",
+            passed ? "text-emerald-600" : "text-rose-500"
+          )}
+        >
+          {score}%
         </p>
+        <p className="text-sm text-slate-500 mb-6">
+          {correctCount} of {questions.length} questions correct
+          {!passed && (
+            <>
+              <br />
+              <span className="text-rose-500 font-medium">
+                You missed {wrongCount} questions. You may miss at most {MAX_WRONG_TO_PASS} to pass.
+              </span>
+            </>
+          )}
+        </p>
+        {!passed && (
+          <button
+            onClick={handleRetake}
+            className="inline-flex items-center gap-2 rounded-xl bg-rose-600 px-6 py-3 text-sm font-semibold text-white hover:bg-rose-700 transition-colors shadow-sm"
+          >
+            <RotateCcw className="h-4 w-4" />
+            Retake Quiz
+          </button>
+        )}
       </div>
     );
   }

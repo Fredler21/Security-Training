@@ -13,6 +13,8 @@ import {
   ChevronRight,
   Loader2,
   Lock,
+  Award,
+  RotateCcw,
 } from "lucide-react";
 import { TrainingModule } from "@/types";
 import QuizSection from "@/components/QuizSection";
@@ -84,9 +86,11 @@ export default function ModuleView({ module }: ModuleViewProps) {
   const [activeTab, setActiveTab] = useState<Tab>("lecture");
   const [lectureRead, setLectureRead] = useState(false);
   const [quizScore, setQuizScore] = useState<number | null>(null);
+  const [quizPassed, setQuizPassed] = useState<boolean>(false);
   const [completed, setCompleted] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [reviewingCompleted, setReviewingCompleted] = useState(false);
 
   // Find the previous module (by order)
   const previousModule = modules.find((m) => m.order === module.order - 1);
@@ -95,11 +99,16 @@ export default function ModuleView({ module }: ModuleViewProps) {
     previousModule !== undefined &&
     getModuleProgress(previousModule.id).status !== "completed";
 
-  function handleQuizComplete(score: number) {
+  const moduleProgress = getModuleProgress(module.id);
+  const alreadyCompleted =
+    !progressLoading && moduleProgress.status === "completed" && !completed;
+  const showCompletedLanding = alreadyCompleted && !reviewingCompleted;
+
+  function handleQuizComplete(score: number, passed: boolean) {
     setQuizScore(score);
-    // Auto-save completion as soon as the quiz finishes (passing or not).
-    // Admin sees attempts + score; employee no longer needs an extra click.
-    if (user && !completed && !saving) {
+    setQuizPassed(passed);
+    // Auto-save only when the user passes (missed at most 1 question).
+    if (passed && user && !completed && !saving) {
       void persistCompletion(score);
     }
   }
@@ -170,8 +179,71 @@ export default function ModuleView({ module }: ModuleViewProps) {
         </div>
       )}
 
-      {/* Module content — only shown when unlocked */}
-      {!isLocked && (
+      {/* Already-completed landing screen */}
+      {!isLocked && showCompletedLanding && (
+        <div className="relative overflow-hidden flex flex-col items-center justify-center text-center py-16 px-6 bg-white border border-emerald-200 rounded-2xl shadow-sm">
+          <div
+            aria-hidden
+            className="absolute inset-x-0 top-0 h-1"
+            style={{ backgroundImage: "linear-gradient(90deg, #059669, #10b981, #34d399)" }}
+          />
+          <div
+            aria-hidden
+            className="absolute -top-20 -right-16 w-64 h-64 rounded-full"
+            style={{ background: "radial-gradient(circle, rgba(16,185,129,0.18), transparent 70%)" }}
+          />
+          <div className="relative h-16 w-16 rounded-full bg-emerald-100 flex items-center justify-center mb-5">
+            <Award className="h-7 w-7 text-emerald-600" />
+          </div>
+          <span className="relative inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[11px] font-semibold uppercase tracking-wider mb-3">
+            <CheckCircle2 className="h-3 w-3" /> Completed
+          </span>
+          <h2 className="relative text-xl font-bold text-slate-900 mb-2">
+            You&apos;ve already finished this module
+          </h2>
+          <p className="relative text-sm text-slate-500 max-w-md mb-2">
+            <span className="font-semibold text-slate-700">{module.title}</span> is marked complete in your progress.
+          </p>
+          {moduleProgress.score !== null && (
+            <p className="relative text-sm text-slate-500 mb-6">
+              Last quiz score:{" "}
+              <span className="font-bold text-emerald-600">{moduleProgress.score}%</span>
+            </p>
+          )}
+          <div className="relative flex flex-wrap items-center justify-center gap-3">
+            <button
+              onClick={() => {
+                setReviewingCompleted(true);
+                setActiveTab("lecture");
+              }}
+              className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 transition-colors"
+            >
+              <BookOpen className="h-4 w-4" /> Review Lecture
+            </button>
+            <button
+              onClick={() => {
+                setReviewingCompleted(true);
+                setActiveTab("quiz");
+                setQuizScore(null);
+                setQuizPassed(false);
+                setCompleted(false);
+              }}
+              className="inline-flex items-center gap-2 rounded-xl bg-white border border-slate-200 px-6 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
+            >
+              <RotateCcw className="h-4 w-4" /> Retake Quiz
+            </button>
+            <Link
+              href="/modules"
+              className="inline-flex items-center gap-2 rounded-xl px-6 py-2.5 text-sm font-semibold text-slate-500 hover:text-slate-700 transition-colors"
+            >
+              Back to Modules <ChevronRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* Module content — only shown when unlocked and not on completed landing */}
+      {!isLocked && !showCompletedLanding && (
       <>
       <div className={`bg-gradient-to-r ${gradientClass} rounded-2xl overflow-hidden mb-8 shadow-lg`}>
         {/* AI-generated module image */}
@@ -349,7 +421,7 @@ export default function ModuleView({ module }: ModuleViewProps) {
             />
           </div>
 
-          {quizScore !== null && !completed && (
+          {quizScore !== null && quizPassed && !completed && (
             <div className="mt-6 flex flex-col items-end gap-3">
               {saveError && (
                 <div className="w-full bg-rose-50 border border-rose-200 text-rose-700 text-sm rounded-xl px-4 py-3">
