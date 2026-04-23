@@ -36,27 +36,75 @@ export default function EmployeeDetailPage() {
   const [progress, setProgress] = useState<EmployeeTrainingProgress | null>(null);
   const [auditLogs, setAuditLogs] = useState<AuditLog[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!id) return;
-    Promise.all([
-      getUserById(id),
-      getCompletionsForUser(id),
-      getUserProgress(id),
-      getAuditLogs(id),
-    ]).then(([u, c, p, logs]) => {
-      setUser(u);
+    let cancelled = false;
+    setLoading(true);
+    setLoadError(null);
+
+    (async () => {
+      // Critical: user profile. If this fails, surface the error.
+      try {
+        const u = await getUserById(id);
+        if (cancelled) return;
+        setUser(u);
+      } catch (err) {
+        console.error("Failed to load employee", err);
+        if (!cancelled) {
+          setLoadError(
+            err instanceof Error
+              ? err.message
+              : "Could not load this employee."
+          );
+        }
+      }
+
+      // Optional sections: failures shouldn't block the page.
+      const [c, p, logs] = await Promise.all([
+        getCompletionsForUser(id).catch((err) => {
+          console.error("Failed to load completions", err);
+          return {} as Record<string, ModuleCompletion>;
+        }),
+        getUserProgress(id).catch((err) => {
+          console.error("Failed to load progress", err);
+          return null;
+        }),
+        getAuditLogs(id).catch((err) => {
+          console.error("Failed to load audit logs", err);
+          return [] as AuditLog[];
+        }),
+      ]);
+
+      if (cancelled) return;
       setCompletions(c);
       setProgress(p);
       setAuditLogs(logs);
       setLoading(false);
-    });
+    })();
+
+    return () => {
+      cancelled = true;
+    };
   }, [id]);
 
   if (loading) {
     return (
       <div className="flex h-screen items-center justify-center">
         <div className="h-6 w-6 animate-spin rounded-full border-2 border-teal-500 border-t-transparent" />
+      </div>
+    );
+  }
+
+  if (loadError && !user) {
+    return (
+      <div className="px-6 lg:px-10 py-10 max-w-4xl mx-auto">
+        <p className="text-rose-600 text-sm font-medium mb-2">Could not load employee</p>
+        <p className="text-slate-500 text-sm mb-4">{loadError}</p>
+        <Link href="/admin/employees" className="text-sm text-teal-600 hover:underline">
+          ← Back to employees
+        </Link>
       </div>
     );
   }
