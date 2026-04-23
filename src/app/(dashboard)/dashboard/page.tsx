@@ -16,10 +16,10 @@ const emeraldLight = "#34d399";
 const indigo = "#6366f1";
 const violet = "#7c3aed";
 
-const text = "#f1f5f9";
-const textMuted = "rgba(255,255,255,0.55)";
-const cardBg = "rgba(15,23,42,0.6)";
-const border = "rgba(255,255,255,0.07)";
+const text = "#0f172a";
+const textMuted = "#64748b";
+const cardBg = "#ffffff";
+const border = "#e2e8f0";
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -74,8 +74,8 @@ export default function DashboardPage() {
           background-clip: text;
           animation: dash-headline-shift 7s ease-in-out infinite;
         }
-        .dash-card { transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; }
-        .dash-card:hover { transform: translateY(-4px); border-color: rgba(16,185,129,0.4) !important; box-shadow: 0 14px 40px rgba(16,185,129,0.15); }
+        .dash-card { transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; box-shadow: 0 1px 3px rgba(15,23,42,0.04); }
+        .dash-card:hover { transform: translateY(-4px); border-color: rgba(16,185,129,0.4) !important; box-shadow: 0 14px 36px rgba(16,185,129,0.18); }
         .dash-cta-btn { position: relative; overflow: hidden; }
         .dash-cta-btn::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); background-size: 200% 100%; animation: dash-shimmer 3.5s linear infinite; pointer-events: none; }
       `}</style>
@@ -152,7 +152,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Custom gradient progress bar */}
-        <div style={{ position: "relative", height: "10px", borderRadius: "999px", background: "rgba(255,255,255,0.06)", overflow: "hidden", marginBottom: "18px" }}>
+        <div style={{ position: "relative", height: "10px", borderRadius: "999px", background: "#e2e8f0", overflow: "hidden", marginBottom: "18px" }}>
           <div
             style={{
               position: "absolute",
@@ -170,7 +170,7 @@ export default function DashboardPage() {
         <div style={{ display: "grid", gridTemplateColumns: `repeat(${modules.length}, 1fr)`, gap: "6px" }}>
           {modules.map((m) => {
             const s = getModuleProgress(m.id).status;
-            const color = s === "completed" ? emerald : s === "in_progress" ? indigo : "rgba(255,255,255,0.08)";
+            const color = s === "completed" ? emerald : s === "in_progress" ? indigo : "#e2e8f0";
             return (
               <div
                 key={m.id}
