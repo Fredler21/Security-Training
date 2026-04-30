@@ -37,6 +37,8 @@ A strong password should be:
 - Completely random or a long passphrase (e.g., "BlueMountain!River42")
 - Unique, never used anywhere else
 
+!!ILLUS:weak-vs-strong|A weak password can be cracked in seconds. A long, random passphrase takes centuries.
+
 ### Password Managers
 
 You should never try to memorize every unique password. Use a trusted password manager instead:
@@ -46,11 +48,15 @@ You should never try to memorize every unique password. Use a trusted password m
 - EdLight-approved options include 1Password and Bitwarden
 - Never store passwords in a browser that is not managed by IT
 
+!!ILLUS:password-manager|One master key unlocks a vault of unique passwords for every account.
+
 ### Multi-Factor Authentication (MFA)
 
 Even the strongest password can be stolen. That's why MFA adds a second verification step, like a code sent to your phone, so that even if someone has your password, they still can't get in.
 
 **MFA is required for all EdLight systems.** Enable it immediately on any account that offers it.
+
+!!ILLUS:mfa-flow|MFA requires a second proof of identity, so a stolen password alone is not enough.
 
 ### Password Sharing Policy
 
@@ -250,12 +256,16 @@ Be suspicious if an email:
 - Includes unexpected attachments or unfamiliar links
 - Asks you to bypass a normal process
 
+!!ILLUS:phishing-email|Anatomy of a phishing email: lookalike domain, urgent language, suspicious link.
+
 ### How to Verify Before Clicking
 
 - **Hover over links** before clicking to preview the actual URL
 - When in doubt, go directly to the website by typing the URL yourself
 - Call the sender through a known phone number to verify
 - Forward suspicious emails to security@edlight.org immediately
+
+!!ILLUS:hover-link|Hover (don't click) to reveal the real destination of any link.
 
 ### What to Do If You Clicked Something
 
@@ -265,6 +275,8 @@ If you accidentally clicked a suspicious link or entered credentials:
 2. Report it to IT at security@edlight.org
 3. Change the password for any account you entered credentials into
 4. Do not try to "fix it yourself", report it right away
+
+!!ILLUS:report-phish|When in doubt, forward suspicious emails straight to security@edlight.org.
     `,
     keyTakeaways: [
       "Phishing attacks impersonate trusted sources to steal information.",
@@ -448,6 +460,8 @@ Always look for **HTTPS** (the padlock icon) in the address bar before entering 
 - HTTP is unencrypted, anyone on the same network can intercept your data
 - A padlock does NOT guarantee a site is trustworthy, it only means the connection is encrypted
 
+!!ILLUS:https-vs-http|HTTPS encrypts the connection, but always double-check the domain too.
+
 ### Dangerous Website Indicators
 
 Treat a website with caution if:
@@ -475,6 +489,8 @@ Public Wi-Fi networks (hotels, coffee shops, airports) are unencrypted and easil
 - Avoid making sensitive transactions (banking, HR, access changes) on public Wi-Fi
 - Use your phone's hotspot as an alternative to public Wi-Fi when a VPN is unavailable
 
+!!ILLUS:vpn-tunnel|A VPN wraps your traffic in an encrypted tunnel, even on hostile networks.
+
 ### Browser Extensions
 
 Browser extensions can be powerful, but they can also be malicious.
@@ -482,6 +498,8 @@ Browser extensions can be powerful, but they can also be malicious.
 - Only install browser extensions that are approved by IT
 - Remove any extensions you no longer use
 - Do not install extensions from unofficial sources or pop-up prompts
+
+!!ILLUS:scareware-popup|Scareware pop-ups try to panic you into clicking. Close the tab and report it.
     `,
     keyTakeaways: [
       "Always look for HTTPS before entering any data on a website.",
@@ -661,6 +679,8 @@ EdLight follows the **principle of least privilege**, every employee should only
 
 This limits the damage that can occur if an account is compromised and reduces the risk of accidental data exposure.
 
+!!ILLUS:least-privilege|You only get keys to the rooms your role actually needs.
+
 ### Your Access Responsibilities
 
 - You are responsible for all activity performed under your account
@@ -684,6 +704,10 @@ Digital security extends to physical spaces:
 - Lock your workstation whenever you step away, even briefly
 - Do not allow others to view your screen in sensitive areas
 - Report any physical security concerns to facility management or IT
+
+!!ILLUS:tailgating|Tailgating: someone slipping through a secured door behind you. Always require a badge.
+
+!!ILLUS:lock-screen|Lock your screen every time you step away — even for a minute.
 
 ### Data Classification
 
@@ -884,6 +908,8 @@ Software updates often contain critical security patches that fix known vulnerab
 - Do not delay or dismiss security updates
 - Contact IT if an update causes issues instead of ignoring it
 
+!!ILLUS:update-shield|Each update closes the doors that attackers are actively trying to walk through.
+
 ### Disk Encryption
 
 Every company device must have disk encryption enabled (e.g., FileVault on Mac, BitLocker on Windows). Encryption ensures that if a device is lost or stolen, the data on it cannot be read.
@@ -891,6 +917,8 @@ Every company device must have disk encryption enabled (e.g., FileVault on Mac, 
 - Verify your device has encryption enabled in system settings
 - Report lost or stolen devices to IT within 1 hour
 - IT can remotely wipe a lost device if encryption and MDM are active
+
+!!ILLUS:device-encryption|With disk encryption on, a stolen laptop reveals nothing but scrambled data.
 
 ### Physical Device Security
 
@@ -922,6 +950,8 @@ The office network is managed and monitored by IT. It's the safest place to work
 - Attackers plant USB drives in parking lots and public spaces knowing curious people will plug them in
 - Only use company-approved external storage devices
 - Report any found USB drives to IT, do not plug them in to check what's on them
+
+!!ILLUS:usb-trap|That "Confidential" USB stick in the parking lot is bait. Hand it to IT — never plug it in.
 
 ### Antivirus and Endpoint Protection
 

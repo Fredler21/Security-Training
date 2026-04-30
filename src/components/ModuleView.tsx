@@ -19,6 +19,7 @@ import {
 import { TrainingModule } from "@/types";
 import QuizSection from "@/components/QuizSection";
 import ModuleAnimation from "@/components/ModuleAnimation";
+import LectureIllustration from "@/components/LectureIllustration";
 import { cn } from "@/lib/cn";
 import { useAuth } from "@/context/AuthContext";
 import { saveModuleCompletion } from "@/lib/firestore";
@@ -31,9 +32,23 @@ interface ModuleViewProps {
   module: TrainingModule;
 }
 
-function renderLecture(content: string) {
+function renderLecture(content: string, color: string) {
   const lines = content.trim().split("\n");
   return lines.map((line, i) => {
+    // Inline animated illustration marker:  !!ILLUS:<kind>|<optional caption>
+    if (line.startsWith("!!ILLUS:")) {
+      const body = line.replace("!!ILLUS:", "").trim();
+      const [kind, ...captionParts] = body.split("|");
+      const caption = captionParts.join("|").trim();
+      return (
+        <LectureIllustration
+          key={i}
+          kind={kind.trim()}
+          caption={caption || undefined}
+          color={color}
+        />
+      );
+    }
     if (line.startsWith("## ")) {
       return (
         <h2 key={i} className="text-xl font-bold text-slate-900 mt-8 mb-3">
@@ -335,7 +350,7 @@ export default function ModuleView({ module }: ModuleViewProps) {
           <ModuleAnimation slug={module.slug} color={module.color} />
 
           <div className="prose-like">
-            {renderLecture(module.lectureContent)}
+            {renderLecture(module.lectureContent, module.color)}
           </div>
 
           {/* Key Takeaways */}
