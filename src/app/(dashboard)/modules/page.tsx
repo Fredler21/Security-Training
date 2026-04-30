@@ -9,7 +9,8 @@ import { useProgress } from "@/hooks/useProgress";
 const totalMinutes = modules.reduce((sum, m) => sum + m.estimatedMinutes, 0);
 
 export default function ModulesPage() {
-  const { user } = useAuth();
+  const { user, role } = useAuth();
+  const isAdmin = role === "admin" || role === "super_admin";
   const { getModuleProgress, loading } = useProgress(user?.uid);
 
   const completedCount = modules.filter(
@@ -17,6 +18,7 @@ export default function ModulesPage() {
   ).length;
 
   function isLocked(order: number) {
+    if (isAdmin) return false;
     if (order === 1) return false;
     const prev = modules.find((m) => m.order === order - 1);
     if (!prev) return false;

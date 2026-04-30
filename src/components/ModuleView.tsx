@@ -97,7 +97,8 @@ function renderLecture(content: string, color: string) {
 }
 
 export default function ModuleView({ module }: ModuleViewProps) {
-  const { user } = useAuth();
+  const { user, role } = useAuth();
+  const isAdmin = role === "admin" || role === "super_admin";
   const { getModuleProgress, loading: progressLoading } = useProgress(user?.uid);
   const [activeTab, setActiveTab] = useState<Tab>("lecture");
   const [lectureRead, setLectureRead] = useState(false);
@@ -111,6 +112,7 @@ export default function ModuleView({ module }: ModuleViewProps) {
   // Find the previous module (by order)
   const previousModule = modules.find((m) => m.order === module.order - 1);
   const isLocked =
+    !isAdmin &&
     !progressLoading &&
     previousModule !== undefined &&
     getModuleProgress(previousModule.id).status !== "completed";
