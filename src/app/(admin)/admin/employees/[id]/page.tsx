@@ -159,7 +159,7 @@ export default function EmployeeDetailPage() {
 
   if (loadError && !user) {
     return (
-      <div className="px-6 lg:px-10 py-10 max-w-4xl mx-auto">
+      <div className="px-4 sm:px-6 lg:px-10 py-6 sm:py-10 max-w-4xl mx-auto">
         <p className="text-rose-600 text-sm font-medium mb-2">Could not load employee</p>
         <p className="text-slate-500 text-sm mb-4">{loadError}</p>
         <Link href="/admin/employees" className="text-sm text-teal-600 hover:underline">
@@ -171,7 +171,7 @@ export default function EmployeeDetailPage() {
 
   if (!user) {
     return (
-      <div className="px-6 lg:px-10 py-10 max-w-4xl mx-auto">
+      <div className="px-4 sm:px-6 lg:px-10 py-6 sm:py-10 max-w-4xl mx-auto">
         <p className="text-slate-500">Employee not found.</p>
         <Link href="/admin/employees" className="text-sm text-teal-600 hover:underline mt-2 block">
           ← Back to employees
@@ -184,7 +184,7 @@ export default function EmployeeDetailPage() {
   const initials = user.name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
 
   return (
-    <div className="px-6 lg:px-10 py-10 max-w-4xl mx-auto">
+    <div className="px-4 sm:px-6 lg:px-10 py-6 sm:py-10 max-w-4xl mx-auto">
       {/* Back */}
       <Link
         href="/admin/employees"
@@ -195,7 +195,7 @@ export default function EmployeeDetailPage() {
       </Link>
 
       {/* Profile card */}
-      <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 mb-6 flex items-start gap-5">
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-4 sm:p-6 mb-6 flex flex-col sm:flex-row items-start gap-4 sm:gap-5">
         {user.profileImage ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img

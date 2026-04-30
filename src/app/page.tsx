@@ -161,7 +161,7 @@ export default function LandingPage() {
         </div>
 
         {/* 2-column grid — asymmetric: text 5fr, image 7fr */}
-        <div style={{ position: "relative", zIndex: 2, maxWidth: "1240px", margin: "0 auto", width: "100%", padding: "40px clamp(20px, 5vw, 56px) 110px", display: "grid", gridTemplateColumns: "minmax(320px, 5fr) minmax(360px, 7fr)", gap: "clamp(32px, 4vw, 56px)", alignItems: "center" }}>
+        <div className="hero-grid" style={{ position: "relative", zIndex: 2, maxWidth: "1240px", margin: "0 auto", width: "100%", padding: "40px clamp(20px, 5vw, 56px) 110px", display: "grid", gridTemplateColumns: "minmax(320px, 5fr) minmax(360px, 7fr)", gap: "clamp(32px, 4vw, 56px)", alignItems: "center" }}>
 
           {/* ── Left: text ── */}
           <div style={{ opacity: mounted ? 1 : 0, animation: mounted ? "fadeUp 0.7s ease both" : "none" }}>
@@ -321,7 +321,7 @@ export default function LandingPage() {
             <p style={{ fontSize: "17px", color: textMuted, maxWidth: "460px", margin: "0 auto", lineHeight: 1.65 }}>Three simple steps to a fully compliant, trained workforce.</p>
           </div>
 
-          <div style={{ position: "relative", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "28px" }}>
+          <div style={{ position: "relative", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))", gap: "28px" }}>
             {/* Connecting line */}
             <div aria-hidden style={{ position: "absolute", top: "60px", left: "15%", right: "15%", height: "2px", backgroundImage: `linear-gradient(90deg, transparent, ${blue}33, ${blue}55, ${blue}33, transparent)`, zIndex: 0, pointerEvents: "none" }} />
 
@@ -432,7 +432,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "22px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))", gap: "22px" }}>
             {features.map((f, i) => (
               <div
                 key={i}
@@ -505,7 +505,7 @@ export default function LandingPage() {
           FOR ADMINS
       ══════════════════════════════════════════════════════════════ */}
       <section id="admins" style={{ padding: "100px clamp(20px, 6vw, 80px)", background: surfaceAlt, borderTop: `1px solid ${border}` }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "64px", alignItems: "center" }}>
+        <div style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))", gap: "clamp(32px, 5vw, 64px)", alignItems: "center" }}>
 
           <div>
             <p style={{ fontSize: "12px", fontWeight: 700, color: blue, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "16px" }}>For Admins</p>
@@ -616,7 +616,7 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 220px), 1fr))", gap: "16px" }}>
             {[
               { icon: "verified_user", title: "Owned by EdLight", desc: "Independently operated. No third-party owners or investors influencing data policy." },
               { icon: "lock", title: "Your data stays private", desc: "Only EdLight employees can see your training information. Nothing is shared outside the company." },

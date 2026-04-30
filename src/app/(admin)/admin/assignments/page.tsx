@@ -87,7 +87,7 @@ function AssignmentModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden">
+      <div className="modal-card bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
           <h3 className="text-base font-semibold text-slate-900">
             {initial ? "Edit Assignment" : "New Training Assignment"}
@@ -260,7 +260,7 @@ export default function AssignmentsPage() {
         />
       )}
 
-      <div className="px-6 lg:px-10 py-10 max-w-5xl mx-auto">
+      <div className="px-4 sm:px-6 lg:px-10 py-6 sm:py-10 max-w-5xl mx-auto">
         {/* Header */}
         <div className="mb-8 flex items-start justify-between gap-4 flex-wrap">
           <div>

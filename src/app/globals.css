@@ -40,3 +40,63 @@ body {
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
+
+/* ────────────────────────────────────────────────────────────
+   Mobile / smartphone responsiveness overrides
+   These targets pages built with inline styles that assume
+   desktop widths. Keeps inline code intact while enforcing
+   mobile-friendly behavior at narrow viewports.
+   ──────────────────────────────────────────────────────────── */
+
+/* Avoid any horizontal page-level overflow on mobile */
+html, body { max-width: 100%; overflow-x: hidden; }
+img, video { max-width: 100%; height: auto; }
+
+@media (max-width: 768px) {
+  /* Hide the public navbar's center nav on phones; brand + Sign in remain. */
+  .pn-center-nav { display: none !important; }
+  .pn-signin { display: none !important; }
+  .pn-container { padding: 0 16px !important; height: 56px !important; }
+  .pn-cta { padding: 8px 14px !important; font-size: 12.5px !important; }
+
+  /* Public footer: stack brand and links */
+  .pf-row { flex-direction: column !important; align-items: flex-start !important; gap: 18px !important; }
+  .pf-links-block { align-items: flex-start !important; width: 100% !important; }
+  .pf-links { gap: 18px !important; flex-wrap: wrap; }
+
+  /* Landing hero: collapse 2-col asymmetric grid into single column */
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    padding-top: 80px !important;
+    padding-bottom: 56px !important;
+    gap: 32px !important;
+  }
+
+  /* Generic: any inline grid we tagged as .auto-grid behaves as 1 col */
+  .stack-on-mobile { grid-template-columns: 1fr !important; }
+
+  /* Dashboard module dot row: cap to 6 wide so dots stay tappable */
+  .module-dots-grid { grid-template-columns: repeat(6, 1fr) !important; gap: 4px !important; }
+
+  /* Admin/dashboard "table-like" divide-y rows: tighten padding,
+     hide the trailing meta column to avoid horizontal squish.   */
+  .row-table-row { gap: 10px !important; padding: 12px 14px !important; }
+  .row-table-row .row-meta-secondary { display: none !important; }
+  .row-table-row .row-meta-primary { font-size: 11px !important; }
+
+  /* Inline-styled top-level page wrappers — common pattern:
+       padding: "40px clamp(20px, 5vw, 48px)" / max-width 1200      */
+  .page-wrap { padding: 24px 16px !important; }
+
+  /* Modal / dialog max-width: never exceed viewport */
+  .modal-card { max-width: calc(100vw - 24px) !important; }
+
+  /* Scale very large hero h1 on extreme narrow screens */
+  h1 { word-break: break-word; }
+}
+
+/* For inline `repeat(auto-fit, minmax(Xpx, 1fr))` grids we can't
+   easily change inline values; instead, when the container is
+   narrower than X, the column should drop. The pattern
+   `minmax(min(100%, Xpx), 1fr)` is added at the file level. */
+

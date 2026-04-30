@@ -97,7 +97,7 @@ export default function AdminDashboardPage() {
   ];
 
   return (
-    <div className="px-6 lg:px-10 py-10 max-w-6xl mx-auto">
+    <div className="px-4 sm:px-6 lg:px-10 py-6 sm:py-10 max-w-6xl mx-auto">
       {/* Header */}
       <div className="mb-10">
         <p className="text-sm font-semibold uppercase tracking-widest text-teal-600 mb-2">
@@ -256,7 +256,7 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* CTA to employee table */}
-      <div className="border border-slate-200 rounded-2xl p-6 bg-white shadow-sm flex items-center justify-between">
+      <div className="border border-slate-200 rounded-2xl p-6 bg-white shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <p className="text-[15px] font-semibold text-slate-900 mb-1">Manage Employees</p>
           <p className="text-sm text-slate-500">
@@ -265,7 +265,7 @@ export default function AdminDashboardPage() {
         </div>
         <Link
           href="/admin/employees"
-          className="flex items-center gap-2 rounded-xl bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-teal-700 transition-colors"
+          className="flex items-center justify-center gap-2 rounded-xl bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-teal-700 transition-colors w-full sm:w-auto"
         >
           Employee List <ChevronRight className="h-4 w-4" />
         </Link>

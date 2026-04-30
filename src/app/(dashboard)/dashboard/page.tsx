@@ -93,7 +93,7 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div style={{ padding: "40px clamp(20px, 5vw, 48px)", maxWidth: "1200px", margin: "0 auto", color: text }}>
+    <div className="page-wrap" style={{ padding: "40px clamp(20px, 5vw, 48px)", maxWidth: "1200px", margin: "0 auto", color: text }}>
       <style>{`
         @keyframes dash-fade-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes dash-pulse-ring { 0% { transform: scale(0.95); opacity: 0.5; } 70% { transform: scale(1.35); opacity: 0; } 100% { opacity: 0; } }
@@ -129,7 +129,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Stats grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px", marginBottom: "32px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 220px), 1fr))", gap: "16px", marginBottom: "32px" }}>
         {stats.map((s, i) => (
           <div
             key={s.label}
@@ -189,7 +189,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Module dots */}
-        <div style={{ display: "grid", gridTemplateColumns: `repeat(${modules.length}, 1fr)`, gap: "6px" }}>
+        <div className="module-dots-grid" style={{ display: "grid", gridTemplateColumns: `repeat(${modules.length}, 1fr)`, gap: "6px" }}>
           {modules.map((m) => {
             const s = getModuleProgress(m.id).status;
             const color = s === "completed" ? blue : s === "in_progress" ? blueDeep : "#e2e8f0";
@@ -441,7 +441,7 @@ export default function DashboardPage() {
             <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>arrow_forward</span>
           </Link>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "18px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))", gap: "18px" }}>
           {modules.map((mod) => {
             const p = getModuleProgress(mod.id);
             return (

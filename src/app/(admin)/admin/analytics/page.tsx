@@ -218,7 +218,7 @@ export default function AnalyticsPage() {
   ];
 
   return (
-    <div className="px-6 lg:px-10 py-10 max-w-6xl mx-auto">
+    <div className="px-4 sm:px-6 lg:px-10 py-6 sm:py-10 max-w-6xl mx-auto">
       {/* Header */}
       <div className="mb-10">
         <p className="text-sm font-semibold uppercase tracking-widest text-teal-600 mb-2">

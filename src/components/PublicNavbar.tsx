@@ -45,7 +45,7 @@ export default function PublicNavbar() {
       {/* Shimmer accent line */}
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: `linear-gradient(to right, transparent, ${shimmerTop}, transparent)` }} />
 
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", padding: "0 clamp(24px, 5vw, 56px)", height: "64px", maxWidth: "1280px", margin: "0 auto" }}>
+      <div className="pn-container" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", padding: "0 clamp(24px, 5vw, 56px)", height: "64px", maxWidth: "1280px", margin: "0 auto" }}>
 
         {/* Left cluster: back button + logo */}
         <div style={{ display: "flex", alignItems: "center", gap: "12px", flexShrink: 0 }}>
@@ -101,7 +101,7 @@ export default function PublicNavbar() {
         </div>
 
         {/* Center nav links */}
-        <nav style={{ display: "flex", alignItems: "center", gap: "2px" }}>
+        <nav className="pn-center-nav" style={{ display: "flex", alignItems: "center", gap: "2px" }}>
           {navLinks.map((link) => (
             <Link
               key={link.label}
@@ -157,6 +157,7 @@ export default function PublicNavbar() {
 
           <Link
             href="/login"
+            className="pn-signin"
             style={{ fontSize: "13.5px", fontWeight: 500, color: linkColor, padding: "8px 14px", borderRadius: "8px", textDecoration: "none", transition: "color 0.18s" }}
           >
             Sign In
@@ -164,6 +165,7 @@ export default function PublicNavbar() {
 
           <Link
             href="/login"
+            className="pn-cta"
             style={{
               fontSize: "13.5px",
               fontWeight: 700,

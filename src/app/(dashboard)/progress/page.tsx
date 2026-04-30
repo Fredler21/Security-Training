@@ -45,7 +45,7 @@ export default function ProgressPage() {
   const minutesDone = completedModules.reduce((sum, m) => sum + m.estimatedMinutes, 0);
 
   return (
-    <div className="px-6 lg:px-10 py-10 max-w-4xl mx-auto">
+    <div className="px-4 sm:px-6 lg:px-10 py-6 sm:py-10 max-w-4xl mx-auto">
       <div className="mb-10">
         <p className="text-sm font-semibold uppercase tracking-widest text-teal-600 mb-2">
           Progress Report
@@ -148,14 +148,14 @@ export default function ProgressPage() {
           <p className="text-sm text-teal-700">You have finished the EdLight Security Training program. Great job.</p>
         </div>
       ) : (
-        <div className="border border-slate-200 rounded-2xl p-6 bg-white shadow-sm flex items-center justify-between">
+        <div className="border border-slate-200 rounded-2xl p-6 bg-white shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <p className="text-[15px] font-semibold text-slate-900 mb-1">
               {remainingModules.length + inProgressModules.length} module{remainingModules.length + inProgressModules.length !== 1 ? "s" : ""} left to complete
             </p>
             <p className="text-sm text-slate-500">Keep going — you&apos;re {overallPercent}% through the program.</p>
           </div>
-          <Link href="/modules" className="flex items-center gap-2 rounded-xl bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-teal-700 transition-colors">
+          <Link href="/modules" className="flex items-center justify-center gap-2 rounded-xl bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-teal-700 transition-colors w-full sm:w-auto">
             Continue Training <ChevronRight className="h-4 w-4" />
           </Link>
         </div>

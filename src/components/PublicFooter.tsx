@@ -15,7 +15,7 @@ export default function PublicFooter() {
 
   return (
     <footer style={{ borderTop: `1px solid ${border}`, padding: "52px clamp(24px, 5vw, 64px)", backgroundColor: bg, transition: "background-color 0.3s" }}>
-      <div style={{ maxWidth: "1280px", margin: "0 auto", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "24px" }}>
+      <div className="pf-row" style={{ maxWidth: "1280px", margin: "0 auto", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "24px" }}>
         {/* Brand */}
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: "9px", marginBottom: "10px" }}>
@@ -35,8 +35,8 @@ export default function PublicFooter() {
         </div>
 
         {/* Links + copyright */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "14px" }}>
-          <div style={{ display: "flex", gap: "24px" }}>
+        <div className="pf-links-block" style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "14px" }}>
+          <div className="pf-links" style={{ display: "flex", gap: "24px" }}>
             {[
               { label: "Contact", href: "/contact" },
               { label: "Privacy", href: "/privacy" },

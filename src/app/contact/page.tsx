@@ -89,7 +89,7 @@ export default function ContactPage() {
       </section>
 
       <section style={{ padding: "70px clamp(20px, 6vw, 80px) 110px", background: bg }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "40px" }}>
+        <div style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))", gap: "clamp(20px, 4vw, 40px)" }}>
 
           {/* Form */}
           <form onSubmit={handleSubmit} style={{ padding: "32px", borderRadius: "18px", background: cardBg, border: `1px solid ${border}`, boxShadow: dark ? "none" : "0 8px 32px rgba(14,165,233,0.08)" }}>

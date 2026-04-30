@@ -89,7 +89,7 @@ export default function PrivacyPage() {
 
       {/* Promise cards */}
       <section style={{ padding: "60px clamp(20px, 6vw, 80px) 20px", background: bg }}>
-        <div style={{ maxWidth: "920px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "16px" }}>
+        <div style={{ maxWidth: "920px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 180px), 1fr))", gap: "16px" }}>
           {promises.map((p, i) => (
             <div
               key={p.title}

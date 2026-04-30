@@ -59,7 +59,7 @@ export default function EmployeesPage() {
   ];
 
   return (
-    <div className="px-6 lg:px-10 py-10 max-w-6xl mx-auto">
+    <div className="px-4 sm:px-6 lg:px-10 py-6 sm:py-10 max-w-6xl mx-auto">
       {/* Header */}
       <div className="mb-8">
         <p className="text-sm font-semibold uppercase tracking-widest text-teal-600 mb-2">
@@ -123,7 +123,7 @@ export default function EmployeesPage() {
                 <Link
                   key={u.id}
                   href={`/admin/employees/${u.id}`}
-                  className="flex items-center gap-4 px-6 py-4 hover:bg-slate-50 transition-colors"
+                  className="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 hover:bg-slate-50 transition-colors"
                 >
                   {/* Avatar */}
                   {u.profileImage ? (
