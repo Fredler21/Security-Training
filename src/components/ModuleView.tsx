@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { TrainingModule } from "@/types";
 import QuizSection from "@/components/QuizSection";
+import ModuleAnimation from "@/components/ModuleAnimation";
 import { cn } from "@/lib/cn";
 import { useAuth } from "@/context/AuthContext";
 import { saveModuleCompletion } from "@/lib/firestore";
@@ -147,7 +148,7 @@ export default function ModuleView({ module }: ModuleViewProps) {
   const gradientClass = colorMap[module.color] ?? colorMap.teal;
 
   return (
-    <div className="px-6 lg:px-10 py-10 max-w-4xl mx-auto">
+    <div className="px-4 sm:px-6 lg:px-10 py-6 sm:py-10 max-w-4xl mx-auto">
       {/* Back */}
       <Link
         href="/modules"
@@ -247,7 +248,7 @@ export default function ModuleView({ module }: ModuleViewProps) {
       <>
       <div className={`bg-gradient-to-r ${gradientClass} rounded-2xl overflow-hidden mb-8 shadow-lg`}>
         {/* AI-generated module image */}
-        <div className="relative w-full h-52 sm:h-64">
+        <div className="relative w-full h-44 sm:h-64">
           <Image
             src={module.image}
             alt={`${module.title} — module illustration`}
@@ -257,15 +258,15 @@ export default function ModuleView({ module }: ModuleViewProps) {
           />
           {/* gradient overlay so text is readable */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 p-6">
-            <p className="text-xs font-semibold uppercase tracking-widest text-white/70 mb-1.5">
+          <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+            <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-white/70 mb-1.5">
               Module {module.order}
             </p>
-            <h1 className="text-2xl font-bold text-white mb-1">{module.title}</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-white mb-1">{module.title}</h1>
           </div>
         </div>
         {/* Lower strip */}
-        <div className="px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div className="px-4 sm:px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <p className="text-sm text-white/80 leading-relaxed max-w-xl">{module.description}</p>
           <div className="flex items-center gap-4 text-sm text-white/70 flex-shrink-0">
             <div className="flex items-center gap-1.5">
@@ -306,7 +307,7 @@ export default function ModuleView({ module }: ModuleViewProps) {
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={cn(
-              "flex items-center gap-2 px-5 py-3 text-sm font-semibold border-b-2 transition-all -mb-px",
+              "flex items-center gap-2 px-3 sm:px-5 py-3 text-sm font-semibold border-b-2 transition-all -mb-px",
               activeTab === tab
                 ? "border-teal-600 text-teal-600"
                 : "border-transparent text-slate-500 hover:text-slate-800"
@@ -330,6 +331,9 @@ export default function ModuleView({ module }: ModuleViewProps) {
       {/* Lecture Tab */}
       {activeTab === "lecture" && (
         <div>
+          {/* Animated illustration to break up the text */}
+          <ModuleAnimation slug={module.slug} color={module.color} />
+
           <div className="prose-like">
             {renderLecture(module.lectureContent)}
           </div>
@@ -374,7 +378,7 @@ export default function ModuleView({ module }: ModuleViewProps) {
           </div>
 
           {/* Continue to Quiz */}
-          <div className="mt-8 flex items-center justify-between bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+          <div className="mt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
             <div>
               <p className="text-[15px] font-semibold text-slate-900">Ready for the quiz?</p>
               <p className="text-sm text-slate-500">
@@ -386,7 +390,7 @@ export default function ModuleView({ module }: ModuleViewProps) {
                 setLectureRead(true);
                 setActiveTab("quiz");
               }}
-              className="flex items-center gap-2 rounded-xl bg-teal-600 px-5 py-3 text-sm font-semibold text-white hover:bg-teal-700 transition-colors"
+              className="flex items-center justify-center gap-2 rounded-xl bg-teal-600 px-5 py-3 text-sm font-semibold text-white hover:bg-teal-700 transition-colors w-full sm:w-auto"
             >
               Take Quiz <ChevronRight className="h-4 w-4" />
             </button>

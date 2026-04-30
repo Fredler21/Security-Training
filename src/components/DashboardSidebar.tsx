@@ -15,6 +15,8 @@ import {
   FileText,
   PieChart,
   ClipboardList,
+  Menu,
+  X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
@@ -53,6 +55,24 @@ export default function DashboardSidebar() {
   const { user, role } = useAuth();
   const [profile, setProfile] = useState<{ jobTitle: string; department: string } | null>(null);
   const [todoCount, setTodoCount] = useState(0);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Close drawer on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  // Lock body scroll while drawer is open on mobile
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    if (mobileOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prev;
+      };
+    }
+  }, [mobileOpen]);
 
   useEffect(() => {
     if (!user) return;
@@ -179,21 +199,133 @@ export default function DashboardSidebar() {
   );
 
   return (
-    <aside
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        width: "256px",
-        minHeight: "100vh",
-        background: bg,
-        borderRight: `1px solid ${border}`,
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
+    <>
       <style>{`
         @keyframes side-pulse { 0%,100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.25); opacity: 0; } }
+        .ds-topbar { display: none; }
+        .ds-overlay { display: none; }
+        @media (max-width: 1023px) {
+          .ds-sidebar {
+            position: fixed !important;
+            top: 0; left: 0;
+            height: 100dvh;
+            min-height: 100dvh !important;
+            transform: translateX(-100%);
+            transition: transform 0.25s ease;
+            z-index: 60;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+          }
+          .ds-sidebar[data-open="true"] { transform: translateX(0); }
+          .ds-topbar {
+            display: flex !important;
+            align-items: center;
+            gap: 12px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+            padding: 0 14px;
+            background: #0a0f1c;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            z-index: 40;
+          }
+          /* Push page content below the fixed topbar */
+          main { padding-top: 56px; }
+          .ds-overlay {
+            display: block;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 55;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+          }
+          .ds-overlay[data-open="true"] {
+            opacity: 1;
+            pointer-events: auto;
+          }
+        }
       `}</style>
+
+      {/* Mobile top bar */}
+      <div className="ds-topbar">
+        <button
+          aria-label="Open navigation menu"
+          onClick={() => setMobileOpen(true)}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 40,
+            height: 40,
+            borderRadius: 10,
+            background: "rgba(255,255,255,0.06)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            color: "#f1f5f9",
+            cursor: "pointer",
+          }}
+        >
+          <Menu size={20} />
+        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <Image src="/edlight-logo-white.png" alt="EdLight" width={26} height={26} style={{ opacity: 0.95 }} />
+          <span style={{ fontSize: 13, fontWeight: 700, color: "#f1f5f9" }}>EdLight</span>
+          <span style={{ fontSize: 12, fontWeight: 700, backgroundImage: `linear-gradient(135deg, ${blueDeep}, ${blueLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Security</span>
+        </div>
+      </div>
+
+      {/* Backdrop */}
+      <div
+        className="ds-overlay"
+        data-open={mobileOpen ? "true" : "false"}
+        onClick={() => setMobileOpen(false)}
+        aria-hidden
+      />
+
+      <aside
+        className="ds-sidebar"
+        data-open={mobileOpen ? "true" : "false"}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "256px",
+          minHeight: "100vh",
+          background: bg,
+          borderRight: `1px solid ${border}`,
+          position: "relative",
+          overflow: "hidden",
+          flexShrink: 0,
+        }}
+      >
+        {/* Mobile close button */}
+        <button
+          aria-label="Close navigation menu"
+          onClick={() => setMobileOpen(false)}
+          style={{
+            position: "absolute",
+            top: 12,
+            right: 12,
+            width: 32,
+            height: 32,
+            display: "none",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: 8,
+            background: "rgba(255,255,255,0.06)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            color: "#f1f5f9",
+            cursor: "pointer",
+            zIndex: 5,
+          }}
+          className="ds-close"
+        >
+          <X size={16} />
+        </button>
+        <style>{`
+          @media (max-width: 1023px) { .ds-close { display: inline-flex !important; } }
+        `}</style>
 
       <div aria-hidden style={{ position: "absolute", top: "-60px", left: "-40px", width: "200px", height: "200px", borderRadius: "50%", background: `radial-gradient(circle, ${blue}33, transparent 70%)`, filter: "blur(30px)", pointerEvents: "none" }} />
 
@@ -259,6 +391,7 @@ export default function DashboardSidebar() {
           Sign Out
         </button>
       </div>
-    </aside>
+      </aside>
+    </>
   );
 }
