@@ -17,6 +17,7 @@ import {
   ClipboardList,
   Menu,
   X,
+  Flag,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
@@ -37,6 +38,7 @@ const adminNavItems = [
   { label: "Employees", href: "/admin/employees", icon: LayoutDashboard },
   { label: "Analytics", href: "/admin/analytics", icon: PieChart },
   { label: "Reports", href: "/admin/reports", icon: FileText },
+  { label: "Security Reports", href: "/admin/security-reports", icon: Flag },
   { label: "Reminders", href: "/admin/reminders", icon: Bell },
   { label: "Assignments", href: "/admin/assignments", icon: ClipboardList },
 ];

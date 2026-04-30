@@ -15,11 +15,13 @@ import {
   Lock,
   Award,
   RotateCcw,
+  Flag,
 } from "lucide-react";
 import { TrainingModule } from "@/types";
 import QuizSection from "@/components/QuizSection";
 import ModuleAnimation from "@/components/ModuleAnimation";
 import LectureIllustration from "@/components/LectureIllustration";
+import ReportSuspiciousModal from "@/components/ReportSuspiciousModal";
 import { cn } from "@/lib/cn";
 import { useAuth } from "@/context/AuthContext";
 import { saveModuleCompletion } from "@/lib/firestore";
@@ -108,6 +110,7 @@ export default function ModuleView({ module }: ModuleViewProps) {
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [reviewingCompleted, setReviewingCompleted] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
 
   // Find the previous module (by order)
   const previousModule = modules.find((m) => m.order === module.order - 1);
@@ -317,33 +320,52 @@ export default function ModuleView({ module }: ModuleViewProps) {
         </div>
       )}
 
-      {/* Tabs */}
-      <div className="flex border-b border-slate-200 mb-8">
-        {(["lecture", "quiz"] as Tab[]).map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={cn(
-              "flex items-center gap-2 px-3 sm:px-5 py-3 text-sm font-semibold border-b-2 transition-all -mb-px",
-              activeTab === tab
-                ? "border-teal-600 text-teal-600"
-                : "border-transparent text-slate-500 hover:text-slate-800"
-            )}
-          >
-            {tab === "lecture" ? (
-              <BookOpen className="h-4 w-4" />
-            ) : (
-              <HelpCircle className="h-4 w-4" />
-            )}
-            {tab === "lecture" ? "Lecture" : "Quiz"}
-            {tab === "quiz" && quizScore !== null && (
-              <span className="ml-1 text-xs bg-teal-100 text-teal-700 rounded-full px-2 py-0.5">
-                {quizScore}%
-              </span>
-            )}
-          </button>
-        ))}
+      {/* Tabs + Report button */}
+      <div className="flex items-center border-b border-slate-200 mb-8">
+        <div className="flex flex-1">
+          {(["lecture", "quiz"] as Tab[]).map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={cn(
+                "flex items-center gap-2 px-3 sm:px-5 py-3 text-sm font-semibold border-b-2 transition-all -mb-px",
+                activeTab === tab
+                  ? "border-teal-600 text-teal-600"
+                  : "border-transparent text-slate-500 hover:text-slate-800"
+              )}
+            >
+              {tab === "lecture" ? (
+                <BookOpen className="h-4 w-4" />
+              ) : (
+                <HelpCircle className="h-4 w-4" />
+              )}
+              {tab === "lecture" ? "Lecture" : "Quiz"}
+              {tab === "quiz" && quizScore !== null && (
+                <span className="ml-1 text-xs bg-teal-100 text-teal-700 rounded-full px-2 py-0.5">
+                  {quizScore}%
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+        <button
+          onClick={() => setShowReportModal(true)}
+          className="flex items-center gap-1.5 px-3 py-2 mb-1 rounded-lg text-xs font-semibold text-red-600 hover:bg-red-50 border border-transparent hover:border-red-200 transition-all"
+          title="Report suspicious activity to the security team"
+        >
+          <Flag className="h-3.5 w-3.5" />
+          Report Suspicious
+        </button>
       </div>
+
+      {/* Report modal */}
+      {showReportModal && (
+        <ReportSuspiciousModal
+          moduleId={module.id}
+          moduleTitle={module.title}
+          onClose={() => setShowReportModal(false)}
+        />
+      )}
 
       {/* Lecture Tab */}
       {activeTab === "lecture" && (

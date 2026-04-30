@@ -118,6 +118,25 @@ export interface TrainingAssignment {
   updatedAt: string;
 }
 
+// ─── Suspicious Activity Reports ─────────────────────────────────────────────
+
+export type ReportSeverity = "low" | "medium" | "high";
+
+export interface SuspiciousReport {
+  id: string;
+  reportedBy: string;         // userId
+  reporterName: string;
+  reporterEmail: string;
+  moduleId: string;
+  moduleTitle: string;
+  description: string;
+  severity: ReportSeverity;
+  status: "open" | "in_review" | "resolved";
+  submittedAt: string;
+  resolvedAt?: string;
+  notes?: string;
+}
+
 // ─── V4 — Department Stats ───────────────────────────────────────────────────
 
 export interface DepartmentStat {

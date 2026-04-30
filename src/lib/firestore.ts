@@ -12,6 +12,7 @@ import {
   limit,
   serverTimestamp,
   increment,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "./firebase";
 import type {
@@ -21,6 +22,8 @@ import type {
   AuditAction,
   ReminderConfig,
   TrainingAssignment,
+  SuspiciousReport,
+  ReportSeverity,
 } from "@/types";
 
 // ─── Module Completions ───────────────────────────────────────────────────────
@@ -369,4 +372,51 @@ export async function resetAllUserProgress(
   } catch (err) {
     console.warn("Audit log write failed (non-fatal)", err);
   }
+}
+
+// ─── Suspicious Activity Reports ─────────────────────────────────────────────
+
+export async function submitSuspiciousReport(
+  report: Omit<SuspiciousReport, "id" | "submittedAt" | "status">
+): Promise<void> {
+  await addDoc(collection(db, "suspiciousReports"), {
+    ...report,
+    status: "open",
+    submittedAt: serverTimestamp(),
+  });
+}
+
+export async function getSuspiciousReports(): Promise<SuspiciousReport[]> {
+  const snap = await getDocs(
+    query(collection(db, "suspiciousReports"), orderBy("submittedAt", "desc"))
+  );
+  return snap.docs.map((d) => {
+    const data = d.data();
+    return {
+      id: d.id,
+      reportedBy: data.reportedBy ?? "",
+      reporterName: data.reporterName ?? "",
+      reporterEmail: data.reporterEmail ?? "",
+      moduleId: data.moduleId ?? "",
+      moduleTitle: data.moduleTitle ?? "",
+      description: data.description ?? "",
+      severity: (data.severity ?? "medium") as ReportSeverity,
+      status: data.status ?? "open",
+      submittedAt: data.submittedAt?.toDate?.()?.toISOString() ?? new Date().toISOString(),
+      resolvedAt: data.resolvedAt?.toDate?.()?.toISOString(),
+      notes: data.notes,
+    } as SuspiciousReport;
+  });
+}
+
+export async function updateReportStatus(
+  reportId: string,
+  status: SuspiciousReport["status"],
+  notes?: string
+): Promise<void> {
+  await updateDoc(doc(db, "suspiciousReports", reportId), {
+    status,
+    ...(notes !== undefined ? { notes } : {}),
+    ...(status === "resolved" ? { resolvedAt: serverTimestamp() } : {}),
+  });
 }
