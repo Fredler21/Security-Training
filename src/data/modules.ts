@@ -512,7 +512,7 @@ Browser extensions can be powerful, but they can also be malicious.
     realLifeExample: {
       title: "The Fake Software Update",
       scenario:
-        "Tchedly Alexis, EdLight's Marketing & Outreach Coordinator, was browsing a news site when a pop up appeared saying 'Your browser is out of date, click here to update.' She clicked and downloaded what looked like a browser update. It was malware that silently logged keystrokes, including her EdLight credentials, for two weeks before fred.pierre-louis@edlight.org detected unusual login activity during a routine security audit.",
+        "Tchedly Alexis, EdLight's Marketing & Outreach Coordinator, was browsing a news site when a pop up appeared saying 'Your browser is out of date, click here to update.' She clicked and downloaded what looked like a browser update. It was malware that silently logged keystrokes, including her EdLight credentials, for two weeks before Fredler detected unusual login activity during a routine security audit.",
       lesson:
         "Legitimate browser updates come from the browser or from the Cybersecurity Department, never from a website pop up. If you see anything suspicious while browsing, close the tab and report it to fred.pierre-louis@edlight.org immediately.",
     },
@@ -738,7 +738,7 @@ Never share Confidential data outside of authorized channels. When in doubt, tre
     realLifeExample: {
       title: "The Shared Login",
       scenario:
-        "Rony Francillon (Director of ESLP & EdLight Nexus) and Stéphane Lainé (Lead Developer, EdLight Labs) shared login credentials to a reporting dashboard because requesting individual access 'took too long.' When Rony transitioned roles, the shared credentials were never updated. Months later, those credentials were used by an unknown party to export sensitive EdLight data, discovered only after fred.pierre-louis@edlight.org flagged the anomalous access in the audit logs.",
+        "Rony Francillon (Director of ESLP & EdLight Nexus) and Stéphane Lainé (Lead Developer, EdLight Labs) shared login credentials to a reporting dashboard because requesting individual access 'took too long.' When Rony transitioned roles, the shared credentials were never updated. Months later, those credentials were used by an unknown party to export sensitive EdLight data, discovered only after Fredler flagged the anomalous access in the audit logs.",
       lesson:
         "Shared accounts make accountability impossible and access revocation unreliable. Every team member must have individual credentials. Any access irregularities must be reported to fred.pierre-louis@edlight.org immediately.",
     },
@@ -970,7 +970,7 @@ The office network is managed and monitored by IT. It's the safest place to work
     realLifeExample: {
       title: "The Airport USB Drive",
       scenario:
-        "Ted Jacquet, EdLight's Co Founder & CFO, found a USB drive in an airport lounge labeled 'EdLight Q4 Board Financials.' Assuming it had been lost by a colleague, he plugged it into his work laptop. The drive silently installed malware that gave attackers remote access to his device, and through it, EdLight's financial systems. fred.pierre-louis@edlight.org detected the intrusion during a routine network security audit.",
+        "Ted Jacquet, EdLight's Co Founder & CFO, found a USB drive in an airport lounge labeled 'EdLight Q4 Board Financials.' Assuming it had been lost by a colleague, he plugged it into his work laptop. The drive silently installed malware that gave attackers remote access to his device, and through it, EdLight's financial systems. Fredler detected the intrusion during a routine network security audit.",
       lesson:
         "Attackers deliberately label USB drives with enticing titles and leave them in high-traffic areas. Never plug in a device you didn't prepare yourself. If you find one, hand it directly to fred.pierre-louis@edlight.org without plugging it in.",
     },
