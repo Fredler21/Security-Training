@@ -1,6 +1,6 @@
-# EdLight Security Training Platform
+#Security Training Platform
 
-EdLight Security Training Platform is a premium internal cybersecurity training website for EdLight employees. It is built to improve security awareness across the organization through structured learning modules, interactive quizzes, progress tracking, and administration tools. The platform is designed to feel like a real SaaS product — polished, fast, and easy for non-technical employees to use, while giving administrators full visibility into participation and completion.
+Security Training Platform is a premium internal cybersecurity training website for EdLight employees. It is built to improve security awareness across the organization through structured learning modules, interactive quizzes, progress tracking, and administration tools. The platform is designed to feel like a real SaaS product — polished, fast, and easy for non-technical employees to use, while giving administrators full visibility into participation and completion.
 
 The entire system — frontend, backend, API routes, authentication, and data models — is written in TypeScript.
 
